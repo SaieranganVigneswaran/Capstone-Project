@@ -23,7 +23,7 @@ router.post("/employee_login", (req, res) => {
                 return res.json({ loginStatus: true, id: result[0].id });
             }
         })
-        
+
       } else {
           return res.json({ loginStatus: false, Error:"wrong email or password" });
       }

@@ -1,0 +1,110 @@
+.profile-container {
+    padding: 20px;
+    background: linear-gradient(135deg, #1e1e1e, #333);
+    border-radius: 10px;
+    color: #fff;
+    max-width: 800px; /* Set a max-width for the container */
+    margin: 0 auto; /* Center the container horizontally */
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 2em;
+    color: #00DDFF;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.profile-details {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-details p {
+    font-size: 1.2em;
+    margin: 5px 0;
+}
+
+.profile-details p strong {
+    color: #00DDFF;
+}
+
+.form-container {
+    margin: 0 auto; /* Center the form container horizontally */
+    max-width: 600px; /* Set a max-width for the form container */
+    padding: 20px; /* Add some padding for better spacing */
+    background: rgba(255, 255, 255, 0.1); /* Slightly lighter background for the form */
+    border-radius: 10px; /* Rounded corners for the form */
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+.form-input, .form-select, .form-textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background: #222;
+    color: #fff;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: #00DDFF;
+    outline: none;
+}
+
+.submit-button {
+    background: #00DDFF;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background: #0098CC;
+}
+
+.table-container {
+    margin-top: 20px;
+}
+
+.tasks-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tasks-table th, .tasks-table td {
+    padding: 10px;
+    text-align: left;
+}
+
+.tasks-table th {
+    background: #333;
+    color: #00DDFF;
+}
+
+.tasks-table tr:nth-child(even) {
+    background: #1e1e1e;
+}
+
+.tasks-table tr:nth-child(odd) {
+    background: #2c2c2c;
+}
+
+.tasks-table td {
+    color: #ccc;
+}

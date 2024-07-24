@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import './Category.css'; // Import a separate CSS file for styling
 
 const Category = () => {
   const [projects, setProjects] = useState([]);
@@ -14,27 +15,27 @@ const Category = () => {
   });
 
   useEffect(() => {
-    // Fetch projects and employees
     const fetchData = async () => {
       try {
         const [projectsResponse, employeesResponse] = await Promise.all([
           axios.get('http://localhost:3000/auth/projects'),
-          axios.get('http://localhost:3000/auth/employees')
+          axios.get('http://localhost:3000/auth/employee')
         ]);
 
         if (projectsResponse.data.Status) {
           setProjects(projectsResponse.data.Result);
         } else {
-          alert(projectsResponse.data.Error);
+          alert(`Failed to fetch projects: ${projectsResponse.data.Error}`);
         }
 
         if (employeesResponse.data.Status) {
           setEmployees(employeesResponse.data.Result);
         } else {
-          alert(employeesResponse.data.Error);
+          alert(`Failed to fetch employees: ${employeesResponse.data.Error}`);
         }
       } catch (err) {
-        console.error(err);
+        console.error('Error fetching data:', err);
+        alert('An error occurred while fetching data.');
       }
     };
 
@@ -49,50 +50,96 @@ const Category = () => {
     e.preventDefault();
     axios.post('http://localhost:3000/auth/add_project', newProject)
       .then(result => {
-        if(result.data.Status) {
+        if (result.data.Status) {
           setProjects([...projects, newProject]);
+          setNewProject({
+            name: '',
+            description: '',
+            start_date: '',
+            end_date: '',
+            owner_id: ''
+          });
         } else {
-          alert(result.data.Error);
+          alert(`Failed to add project: ${result.data.Error}`);
         }
-      }).catch(err => console.log(err));
+      }).catch(err => {
+        console.error('Error adding project:', err);
+        alert('An error occurred while adding the project.');
+      });
   };
 
   return (
-    <div className='px-5 mt-3'>
-      <div className='d-flex justify-content-center'>
+    <div className='container'>
+      <div className='header'>
         <h3>PROJECT LIST</h3>
       </div>
-      <Link to="/dashboard/add_project" className='btn btn-success'>Add Project</Link>
-      <div className='mt-3'>
+      <div className='form-container'>
         <form onSubmit={handleSubmit}>
           <div className='form-group'>
             <label>Name</label>
-            <input type='text' name='name' className='form-control' value={newProject.name} onChange={handleChange} />
+            <input
+              type='text'
+              name='name'
+              className='form-input'
+              value={newProject.name}
+              onChange={handleChange}
+              required
+            />
           </div>
           <div className='form-group'>
             <label>Description</label>
-            <textarea name='description' className='form-control' value={newProject.description} onChange={handleChange}></textarea>
+            <textarea
+              name='description'
+              className='form-input'
+              value={newProject.description}
+              onChange={handleChange}
+              required
+            />
           </div>
           <div className='form-group'>
             <label>Start Date</label>
-            <input type='date' name='start_date' className='form-control' value={newProject.start_date} onChange={handleChange} />
+            <input
+              type='date'
+              name='start_date'
+              className='form-input'
+              value={newProject.start_date}
+              onChange={handleChange}
+              required
+            />
           </div>
           <div className='form-group'>
             <label>End Date</label>
-            <input type='date' name='end_date' className='form-control' value={newProject.end_date} onChange={handleChange} />
+            <input
+              type='date'
+              name='end_date'
+              className='form-input'
+              value={newProject.end_date}
+              onChange={handleChange}
+              required
+            />
           </div>
           <div className='form-group'>
             <label>Owner</label>
-            <select name='owner_id' className='form-control' value={newProject.owner_id} onChange={handleChange}>
+            <select
+              name='owner_id'
+              className='form-input'
+              value={newProject.owner_id}
+              onChange={handleChange}
+              required
+            >
               <option value=''>Select Employee</option>
               {employees.map(employee => (
-                <option key={employee.id} value={employee.id}>{employee.name}</option>
+                <option key={employee.id} value={employee.id}>
+                  {employee.name}
+                </option>
               ))}
             </select>
           </div>
-          <button type='submit' className='btn btn-primary'>Add Project</button>
+          <button type='submit' className='submit-button'>Add Project</button>
         </form>
-        <table className='table mt-3'>
+      </div>
+      <div className='table-container'>
+        <table className='projects-table'>
           <thead>
             <tr>
               <th>Name</th>
@@ -109,7 +156,7 @@ const Category = () => {
                 <td>{p.description}</td>
                 <td>{p.start_date}</td>
                 <td>{p.end_date}</td>
-                <td>{p.owner_name}</td>
+                <td>{employees.find(emp => emp.id === p.owner_id)?.name || 'Unknown'}</td>
               </tr>
             ))}
           </tbody>
