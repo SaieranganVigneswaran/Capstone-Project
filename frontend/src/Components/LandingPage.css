@@ -1,0 +1,279 @@
+/* General Styles */
+.landing-page {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif; /* Updated font */
+    background: linear-gradient(45deg, #00DDFF, #111); /* Initial gradient */
+    animation: gradientAnimation 10s ease infinite; /* Background gradient animation */
+}
+
+/* Animated Background Gradient */
+@keyframes gradientAnimation {
+    0% { background: linear-gradient(45deg, #00DDFF, #111); }
+    50% { background: linear-gradient(45deg, #ff1d58, #111); }
+    100% { background: linear-gradient(45deg, #00DDFF, #111); }
+}
+
+/* Hero Section */
+.hero-section {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 2;
+    color: #fefefe;
+}
+
+.hero-section h1, .hero-section p {
+    transition: color 0.3s;
+}
+
+.hero-section h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    color: #00DDFF; /* Futuristic Blue */
+    font-family: 'Rajdhani', sans-serif; /* Updated font */
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.8); /* Neon glow effect */
+}
+
+.hero-section p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    color: #fff;
+    font-family: 'Lato', sans-serif; /* Updated font */
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Subtle glow effect */
+}
+
+.hero-section h1:hover, .hero-section p:hover {
+    color: #ff1d58; /* Futuristic Pink on hover */
+    text-shadow: 0 0 15px rgba(255, 29, 88, 0.8); /* Enhanced neon glow on hover */
+}
+
+.cta-button {
+    padding: 15px 30px;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #ff1d58, #ff6f61);
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+    font-family: 'Poppins', sans-serif; /* Updated font */
+    border: 2px solid #ff1d58; /* Border for emphasis */
+}
+
+.cta-button:hover {
+    background: linear-gradient(135deg, #ff6f61, #ff1d58);
+    transform: scale(1.05);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    border-color: #ff6f61; /* Border color change on hover */
+}
+
+/* Features Section */
+.features {
+    position: relative;
+    padding: 50px 0;
+    text-align: center;
+    z-index: 2;
+}
+
+.feature {
+    margin-bottom: 40px;
+}
+
+.card-container {
+    perspective: 1000px; /* Add perspective for 3D effect */
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+.card {
+    width: 300px;
+    height: 200px;
+    position: relative;
+    background: rgba(0, 0, 0, 0.9); /* Darker background */
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+    transition: transform 0.6s, box-shadow 0.3s;
+    transform-style: preserve-3d; /* Preserve 3D transformation */
+    font-family: 'Poppins', sans-serif; /* Updated font */
+}
+
+.card:hover {
+    transform: rotateY(180deg); /* 3D flip effect */
+}
+
+.card-content, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Hide backface */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+.card-content {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.card-back {
+    background: #222;
+    transform: rotateY(180deg);
+}
+
+/* Pin Container */
+.pin-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.pin {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(45deg);
+    position: relative;
+    perspective: 1000px;
+    animation: float 3s ease-in-out infinite; /* Floating effect */
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.pin-content {
+    color: #00DDFF; /* Futuristic Blue */
+    font-size: 0.75rem;
+    text-align: center;
+    font-weight: bold;
+    transform: rotateX(-10deg) rotateY(20deg);
+    transition: transform 0.3s;
+    font-family: 'Poppins', sans-serif; /* Updated font */
+}
+
+.pin-date-time, .pin-temperature {
+    margin: 5px 0;
+}
+
+.pin-date-time {
+    font-size: 0.7rem;
+}
+
+.pin-temperature {
+    font-size: 0.9rem;
+    font-weight: normal;
+}
+
+/* Scroll Beam */
+.scroll-beam {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: scrollBeam 2s infinite;
+    z-index: 1;
+}
+
+@keyframes scrollBeam {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Particles.js Container */
+#tsparticles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+/* Footer */
+.footer {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    text-align: center;
+    font-size: 0.75rem;
+    color: #aaa;
+}
+
+/* Navigation Buttons */
+.navigation-buttons {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    z-index: 2;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-family: 'Poppins', sans-serif; /* Updated font */
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #ff1d58, #ff6f61);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #ff6f61, #ff1d58);
+}
+
+.btn-secondary {
+    background: #0049B7; /* Brutal Blue */
+}
+
+.btn-secondary:hover {
+    background: #00337F; /* Darker shade of Brutal Blue */
+}
+
+/* Clock Container */
+.clock-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-size: 1.5rem;
+    color: #00DDFF; /* Futuristic Blue */
+    font-family: 'Poppins', sans-serif; /* Updated font */
+    z-index: 2;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.8); /* Neon glow effect */
+}
+

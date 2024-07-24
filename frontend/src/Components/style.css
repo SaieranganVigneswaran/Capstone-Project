@@ -1,0 +1,522 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Background */
+.loginPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('Images/img.jpg') no-repeat center center fixed;
+    background-size: cover;
+    transition: background-color 0.5s, background-image 0.5s;
+}
+
+/* Background Color Changes */
+.loginPage.success {
+    background-color: rgba(0, 255, 0, 0.3); /* Light green for success */
+    animation: crackersEffect 5s forwards;
+}
+
+.loginPage.warning {
+    background-color: rgba(255, 0, 0, 0.3); /* Light red for warning */
+    animation: warningEffect 5s forwards;
+}
+
+
+/* Glowing Effect on Form Container */
+.loginForm {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 20px;
+    padding: 30px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+    color: #fff;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px); /* Glassmorphism effect */
+}
+
+/* Glowing Effect on Form Container */
+.loginForm::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(0, 255, 255, 0.2) 30%, rgba(0, 255, 255, 0) 70%);
+    border-radius: 20px;
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 1;
+    animation: glowAnimation 3s infinite alternate;
+}
+
+/* Smooth Glowing Animation */
+@keyframes glowAnimation {
+    from {
+        opacity: 0.5;
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    }
+    to {
+        opacity: 0.8;
+        box-shadow: 0 0 30px rgba(0, 255, 255, 0.7);
+    }
+}
+
+/* Crackers Effect Animation */
+@keyframes crackersEffect {
+    0% {
+        background-color: rgba(0, 255, 0, 0.3);
+    }
+    100% {
+        background-color: rgba(0, 255, 0, 0.1);
+        box-shadow: 0 0 40px rgba(0, 255, 0, 0.8);
+    }
+}
+
+/* Warning Effect Animation */
+@keyframes warningEffect {
+    0% {
+        background-color: rgba(255, 0, 0, 0.3);
+    }
+    100% {
+        background-color: rgba(255, 0, 0, 0.1);
+        box-shadow: 0 0 40px rgba(255, 0, 0, 0.8);
+    }
+}
+
+/* Error and Success Messages */
+.message {
+    font-size: 16px;
+    margin-bottom: 20px;
+    z-index: 2;
+    font-weight: bold;
+}
+
+.message.warning p {
+    color: #ff4d4d;
+}
+
+.message.success p {
+    color: #4caf50; /* Green color for success */
+}
+
+/* Form Header */
+h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #00DDFF; /* Futuristic Blue */
+    text-shadow: 0 0 10px rgba(0, 221, 255, 0.7); /* Subtle glow */
+}
+
+/* Input Group */
+.inputGroup {
+    margin-bottom: 20px;
+    text-align: left;
+    position: relative;
+    z-index: 2;
+}
+
+/* Input Fields */
+.inputField {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Input Fields on Focus */
+.inputField:focus {
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #00DDFF; /* Futuristic Blue */
+    box-shadow: 0 0 15px rgba(0, 221, 255, 0.7); /* Glowing effect */
+}
+
+/* Buttons Container */
+.d-flex {
+    gap: 20px; /* Space between buttons */
+}
+
+/* Button Styles */
+.btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px; /* More rounded for a modern look */
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase; /* Capitalize button text */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4); /* Subtle text shadow */
+}
+
+/* Employee Button */
+.btn-primary {
+    background: linear-gradient(135deg, #ff1d58, #ff6f61); /* Gradient for a vibrant look */
+    border: 2px solid #ff1d58; /* Border color matching gradient */
+    box-shadow: 0 4px 10px rgba(255, 29, 88, 0.5); /* Slight shadow for depth */
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 30%, rgba(255, 255, 255, 0) 70%);
+    opacity: 0.3;
+    transition: opacity 0.4s;
+    transform: scale(0);
+    z-index: 1;
+}
+
+.btn-primary:hover::before {
+    opacity: 0.1;
+    transform: scale(1);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #ff6f61, #ff1d58); /* Reversed gradient on hover */
+    box-shadow: 0 6px 15px rgba(255, 29, 88, 0.6); /* Enhanced shadow on hover */
+    transform: translateY(-3px); /* Slight lift effect */
+}
+
+/* Admin Button */
+.btn-success {
+    background: linear-gradient(135deg, #00DDFF, #0049B7); /* Futuristic blue gradient */
+    border: 2px solid #00DDFF; /* Border color matching gradient */
+    box-shadow: 0 4px 10px rgba(0, 221, 255, 0.5); /* Slight shadow for depth */
+}
+
+.btn-success::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 30%, rgba(255, 255, 255, 0) 70%);
+    opacity: 0.3;
+    transition: opacity 0.4s;
+    transform: scale(0);
+    z-index: 1;
+}
+
+.btn-success:hover::before {
+    opacity: 0.1;
+    transform: scale(1);
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #0049B7, #00DDFF); /* Reversed gradient on hover */
+    box-shadow: 0 6px 15px rgba(0, 221, 255, 0.6); /* Enhanced shadow on hover */
+    transform: translateY(-3px); /* Slight lift effect */
+}
+
+/* Terms Checkbox */
+.terms {
+    margin-top: 10px;
+    text-align: left;
+    font-size: 14px;
+    position: relative;
+    z-index: 2;
+}
+
+.terms input {
+    margin-right: 10px;
+}
+
+/* Responsive Styling */
+@media (max-width: 500px) {
+    .loginForm {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .inputField {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .submitButton {
+        font-size: 16px;
+        padding: 12px;
+    }
+}
+
+/* Landing Page Styles */
+.landingPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url('Images/landing-bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    transition: background-color 0.5s, background-image 0.5s;
+}
+
+.landingContent {
+    text-align: center;
+    color: #fff;
+    backdrop-filter: blur(8px); /* Glassmorphism effect */
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.landingContent h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #00DDFF; /* Futuristic Blue */
+    text-shadow: 0 0 15px rgba(0, 221, 255, 0.8);
+}
+
+.landingContent p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.footer {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.footer p {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Modern Button Styles for Landing Page */
+.btn {
+    padding: 15px 35px;
+    border: none;
+    border-radius: 30px; /* More rounded for a modern look */
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Employee Button */
+.btn-primary {
+    background: linear-gradient(135deg, #ff1d58, #ff6f61); /* Gradient for a vibrant look */
+    border: 2px solid #ff1d58; /* Border color matching gradient */
+    box-shadow: 0 4px 12px rgba(255, 29, 88, 0.5); /* Slight shadow for depth */
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 30%, rgba(255, 255, 255, 0) 70%);
+    opacity: 0.3;
+    transition: opacity 0.4s;
+    transform: scale(0);
+    z-index: 1;
+}
+
+.btn-primary:hover::before {
+    opacity: 0.1;
+    transform: scale(1);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #ff6f61, #ff1d58); /* Reversed gradient on hover */
+    box-shadow: 0 6px 15px rgba(255, 29, 88, 0.6); /* Enhanced shadow on hover */
+    transform: translateY(-3px); /* Slight lift effect */
+}
+
+/* Admin Button */
+.btn-success {
+    background: linear-gradient(135deg, #00DDFF, #0049B7); /* Futuristic blue gradient */
+    border: 2px solid #00DDFF; /* Border color matching gradient */
+    box-shadow: 0 4px 12px rgba(0, 221, 255, 0.5); /* Slight shadow for depth */
+}
+
+.btn-success::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 30%, rgba(255, 255, 255, 0) 70%);
+    opacity: 0.3;
+    transition: opacity 0.4s;
+    transform: scale(0);
+    z-index: 1;
+}
+
+.btn-success:hover::before {
+    opacity: 0.1;
+    transform: scale(1);
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #0049B7, #00DDFF); /* Reversed gradient on hover */
+    box-shadow: 0 6px 15px rgba(0, 221, 255, 0.6); /* Enhanced shadow on hover */
+    transform: translateY(-3px); /* Slight lift effect */
+}
+
+.employee_image {
+    width: 50px; /* Adjust the size as needed */
+    height: 50px; /* Make sure the height is the same as the width */
+    border-radius: 50%; /* This makes the image circular */
+    object-fit: cover; /* This makes sure the image covers the area properly */
+}
+
+/* style.css */
+
+/* Container for the registration page */
+.loginPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(45deg, #00DDFF, #111);
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Form container */
+.loginForm {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+}
+
+/* Status message */
+.message {
+    position: absolute;
+    top: -40px;
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.message.success {
+    color: #00DDFF; /* Futuristic Blue */
+}
+
+.message.warning {
+    color: #ff1d58; /* Futuristic Pink */
+}
+
+/* Form heading */
+h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #fff;
+}
+
+/* Input fields */
+.inputGroup {
+    margin-bottom: 15px;
+}
+
+.inputGroup label {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    color: #ccc;
+}
+
+.inputField {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background: #222;
+    color: #fff;
+    font-size: 1rem;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.inputField:focus {
+    outline: none;
+    border-color: #00DDFF; /* Futuristic Blue */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Buttons */
+.btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #ff1d58, #ff6f61);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #ff6f61, #ff1d58);
+    transform: scale(1.05);
+}
+
+.btn-secondary {
+    background: #333;
+    margin-top: 10px;
+}
+
+.btn-secondary:hover {
+    background: #444;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .loginForm {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+    }
+}

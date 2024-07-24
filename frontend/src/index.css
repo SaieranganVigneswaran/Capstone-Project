@@ -1,0 +1,461 @@
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Background */
+.loginPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('Images/img.jpg') no-repeat center center fixed;
+  background-size: cover;
+  transition: background-color 0.5s, background-image 0.5s;
+}
+
+/* Background Color Changes */
+.loginPage.success {
+  background-color: rgba(0, 255, 0, 0.3); /* Light green for success */
+  animation: successEffect 1s forwards;
+}
+
+.loginPage.warning {
+  background-color: rgba(255, 0, 0, 0.3); /* Light red for warning */
+  animation: warningEffect 1s forwards;
+}
+
+/* Glowing Effect on Form Container */
+.loginForm {
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+  padding: 30px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+  color: #fff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px); /* Glassmorphism effect */
+  transition: transform 0.3s ease; /* Add transition for smooth scaling */
+}
+
+/* Scale up on hover */
+.loginForm:hover {
+  transform: scale(1.05); /* Enlarge the box by 5% */
+}
+
+/* Glowing Effect on Form Container */
+.loginForm::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(0, 255, 255, 0.2) 30%, rgba(0, 255, 255, 0) 70%);
+  border-radius: 20px;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 1;
+  animation: glowAnimation 3s infinite alternate;
+}
+
+/* Smooth Glowing Animation */
+@keyframes glowAnimation {
+  from {
+    opacity: 0.5;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+  }
+  to {
+    opacity: 0.8;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.7);
+  }
+}
+
+/* Success Effect Animation */
+@keyframes successEffect {
+  0% {
+    background-color: rgba(0, 255, 0, 0.3);
+  }
+  100% {
+    background-color: rgba(0, 255, 0, 0.1);
+    box-shadow: 0 0 40px rgba(0, 255, 0, 0.8);
+  }
+}
+
+/* Warning Effect Animation */
+@keyframes warningEffect {
+  0% {
+    background-color: rgba(255, 0, 0, 0.3);
+  }
+  100% {
+    background-color: rgba(255, 0, 0, 0.1);
+    box-shadow: 0 0 40px rgba(255, 0, 0, 0.8);
+  }
+}
+
+/* Error and Success Messages */
+.message {
+  font-size: 16px;
+  margin-bottom: 20px;
+  z-index: 2;
+  font-weight: bold;
+}
+
+.message.warning p {
+  color: #ff4d4d; /* Light red for warning messages */
+}
+
+.message.success p {
+  color: #4caf50; /* Green color for success messages */
+}
+
+/* Form Header */
+h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #00DDFF; /* Futuristic Blue */
+  text-shadow: 0 0 10px rgba(0, 221, 255, 0.7); /* Subtle glow */
+}
+
+/* Input Group */
+.inputGroup {
+  margin-bottom: 20px;
+  text-align: left;
+  position: relative;
+  z-index: 2;
+}
+
+/* Input Fields */
+.inputField {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Input Fields on Focus */
+.inputField:focus {
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid #00DDFF; /* Futuristic Blue */
+  box-shadow: 0 0 15px rgba(0, 221, 255, 0.7); /* Glowing effect */
+}
+
+/* Buttons Container */
+.d-flex {
+  gap: 20px; /* Space between buttons */
+}
+
+/* Button Styles */
+.btn {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 25px; /* More rounded for a modern look */
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Primary Button Style */
+.btn-primary {
+  background: linear-gradient(135deg, #ff1d58, #ff6f61); /* Gradient for a vibrant look */
+  border: 2px solid #ff1d58; /* Border color matching gradient */
+  box-shadow: 0 4px 10px rgba(255, 29, 88, 0.5); /* Slight shadow for depth */
+}
+
+/* Animated Button Effect */
+.btn-primary:hover::before {
+  opacity: 0.1;
+  transform: scale(1);
+}
+
+/* Button Movement Animation */
+.btn-primary.animate {
+  animation: moveAway 1s ease-in-out;
+}
+
+@keyframes moveAway {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-100px); }
+  50% { transform: translateX(100px); }
+  75% { transform: translateX(-100px); }
+  100% { transform: translateX(0); }
+}
+
+/* Disabled Button */
+.btn-disabled {
+  background: rgba(255, 255, 255, 0.2); /* Light color for disabled state */
+  color: rgba(255, 255, 255, 0.5); /* Light text color */
+  cursor: not-allowed; /* Show as not clickable */
+  box-shadow: none; /* Remove shadow */
+  pointer-events: none; /* Disable all pointer events */
+}
+
+/* Terms and Conditions */
+.terms {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.terms input {
+  margin-right: 10px;
+}
+
+.terms label {
+  color: #fff;
+}
+
+.next-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('Images/img.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.form-container {
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+  padding: 30px;
+  width: 100%;
+  max-width: 500px;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.register-form {
+  margin-top: 20px;
+}
+
+.inputGroup {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.inputField {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 16px;
+}
+
+.btn {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 25px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center; /* Vertically centers text */
+  justify-content: center; /* Horizontally centers text */
+  text-align: center; /* Ensures text alignment */
+  margin: 10px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #ff1d58, #ff6f61);
+}
+
+.btn-secondary {
+  background: #00DDFF;
+}
+
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Background */
+.next-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('Images/img.jpg') no-repeat center center fixed;
+  background-size: cover;
+  transition: background-color 0.5s ease-in-out, background-image 0.5s ease-in-out;
+}
+
+/* Form Container */
+.form-container {
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+  padding: 30px;
+  width: 100%;
+  max-width: 500px;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Hover Effect on Form Container */
+.form-container:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+}
+
+/* Glowing Effect on Form Container */
+.form-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(0, 255, 255, 0.2) 30%, rgba(0, 255, 255, 0) 70%);
+  border-radius: 20px;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 1;
+  animation: glowAnimation 3s infinite alternate;
+}
+
+/* Smooth Glowing Animation */
+@keyframes glowAnimation {
+  from {
+    opacity: 0.5;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+  }
+  to {
+    opacity: 0.8;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.7);
+  }
+}
+
+/* Input Group */
+.inputGroup {
+  margin-bottom: 20px;
+  text-align: left;
+  position: relative;
+  z-index: 2;
+}
+
+/* Input Fields */
+.inputField {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 16px;
+  outline: none;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Input Fields on Focus */
+.inputField:focus {
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid #00DDFF;
+  box-shadow: 0 0 15px rgba(0, 221, 255, 0.7);
+}
+
+/* Buttons Container */
+.d-flex {
+  gap: 20px;
+}
+
+/* Button Styles */
+.btn {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 25px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 10px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Primary Button Style */
+.btn-primary {
+  background: linear-gradient(135deg, #ff1d58, #ff6f61);
+  border: 2px solid #ff1d58;
+  box-shadow: 0 4px 10px rgba(255, 29, 88, 0.5);
+}
+
+/* Primary Button Hover Effect */
+.btn-primary:hover {
+  background: linear-gradient(135deg, #ff1d58, #ff6f61);
+  transform: scale(1.05);
+}
+
+/* Secondary Button Style */
+.btn-secondary {
+  background: #00DDFF;
+  border: 2px solid #00AAFF; /* Slightly darker border for contrast */
+  box-shadow: 0 4px 10px rgba(0, 221, 255, 0.5); /* Matching shadow effect */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+/* Secondary Button Hover Effect */
+.btn-secondary:hover {
+  background: #00AAFF; /* Darker blue on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Secondary Button Hover Effect */
+.btn-secondary:hover {
+  background: #00AAFF;
+}
+
+/* Disabled Button */
+.btn-disabled {
+  background: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.5);
+  cursor: not-allowed;
+  box-shadow: none;
+  pointer-events: none;
+}
+
+/* Terms and Conditions */
+.terms {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.terms input {
+  margin-right: 10px;
+}
+
+.terms label {
+  color: #fff;
+}
+
