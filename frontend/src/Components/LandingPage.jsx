@@ -90,7 +90,7 @@ const LandingPage = () => {
         <div className="scroll-beam"></div>
       </div>
       <footer className="footer">
-        <p>© 2024 SaieTech. All rights reserved.</p>
+        <p>© 2024 CapstoneTech. All rights reserved.</p>
       </footer>
       <div className="clock-container">
         <div className="clock">{clock}</div>

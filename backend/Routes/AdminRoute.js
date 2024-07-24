@@ -193,4 +193,26 @@ router.get('/logout', (req, res) => {
     return res.json({Status: true})
 })
 
+// Edit Admin
+router.put('/admin/:id', (req, res) => {
+    const id = req.params.id;
+    const { email } = req.body;
+    const sql = 'UPDATE admin SET email = ? WHERE id = ?';
+    con.query(sql, [email, id], (err, result) => {
+        if (err) return res.json({ Status: false, Error: "Query Error" });
+        return res.json({ Status: true });
+    });
+});
+
+// Delete Admin
+router.delete('/admin/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = 'DELETE FROM admin WHERE id = ?';
+    con.query(sql, [id], (err, result) => {
+        if (err) return res.json({ Status: false, Error: "Query Error" });
+        return res.json({ Status: true });
+    });
+});
+
+
 export { router as adminRouter };
