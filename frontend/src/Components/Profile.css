@@ -3,108 +3,143 @@
     background: linear-gradient(135deg, #1e1e1e, #333);
     border-radius: 10px;
     color: #fff;
-    max-width: 800px; /* Set a max-width for the container */
-    margin: 0 auto; /* Center the container horizontally */
-}
+    max-width: 800px;
+    margin: 0 auto;
+  }
 
-.header {
+  .header {
     text-align: center;
     margin-bottom: 20px;
-}
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    position: relative;
+    border-radius: 8px;
+  }
 
-.header h1 {
-    font-size: 2em;
+  .header h2 {
+    margin: 0;
+    color: #fff;
+    font-size: 32px;
     color: #00DDFF;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
+  }
 
-.profile-details {
-    text-align: center;
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    pointer-events: none;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+  }
+
+  .header:hover::before {
+    border-color: #00DDFF; /* Blue Light */
+  }
+
+  .form-container {
     margin-bottom: 20px;
-}
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
+  }
 
-.profile-details p {
-    font-size: 1.2em;
-    margin: 5px 0;
-}
+  .form-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    pointer-events: none;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+  }
 
-.profile-details p strong {
-    color: #00DDFF;
-}
+  .form-container:hover::before {
+    border-color: #00DDFF; /* Blue Light */
+  }
 
-.form-container {
-    margin: 0 auto; /* Center the form container horizontally */
-    max-width: 600px; /* Set a max-width for the form container */
-    padding: 20px; /* Add some padding for better spacing */
-    background: rgba(255, 255, 255, 0.1); /* Slightly lighter background for the form */
-    border-radius: 10px; /* Rounded corners for the form */
-}
-
-.form-group {
+  .form-group {
     margin-bottom: 15px;
-}
+  }
 
-.form-group label {
-    display: block;
-    font-size: 1.2em;
-    margin-bottom: 5px;
-}
-
-.form-input, .form-select, .form-textarea {
+  .form-input, .form-textarea, .form-select {
     width: 100%;
     padding: 10px;
-    border: 1px solid #444;
+    border: 1px solid #ddd;
     border-radius: 5px;
     background: #222;
     color: #fff;
-}
+  }
 
-.form-input:focus, .form-select:focus, .form-textarea:focus {
-    border-color: #00DDFF;
-    outline: none;
-}
-
-.submit-button {
-    background: #00DDFF;
+  .submit-button {
+    background-color: #00DDFF; /* Brutal Blue */
     color: #fff;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
-    font-size: 1.2em;
     cursor: pointer;
-}
+    font-size: 16px;
+  }
 
-.submit-button:hover {
-    background: #0098CC;
-}
+  .submit-button:hover {
+    background-color: #00DDFF;
+  }
 
-.table-container {
-    margin-top: 20px;
-}
+  .table-container {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 8px;
+  }
 
-.tasks-table {
+  .tasks-table {
     width: 100%;
     border-collapse: collapse;
-}
+  }
 
-.tasks-table th, .tasks-table td {
+  .tasks-table th, .tasks-table td {
     padding: 10px;
-    text-align: left;
-}
+    text-align: center;
+  }
 
-.tasks-table th {
-    background: #333;
-    color: #00DDFF;
-}
-
-.tasks-table tr:nth-child(even) {
+  .tasks-table th {
     background: #1e1e1e;
-}
+    color: #fff;
+  }
 
-.tasks-table tr:nth-child(odd) {
-    background: #2c2c2c;
-}
+  .tasks-table td {
+    background: #333;
+  }
 
-.tasks-table td {
-    color: #ccc;
-}
+  .action-button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .edit-button {
+    background-color: #00DDFF; /* Sister Sister */
+    color: #fff;
+  }
+
+  .delete-button {
+    background-color: #00DDFF; /* Yass Queen */
+    color: #fff;
+  }
+
+  .edit-button:hover {
+    background-color: #00DDFF;
+  }
+
+  .delete-button:hover {
+    background-color: #00DDFF;
+  }

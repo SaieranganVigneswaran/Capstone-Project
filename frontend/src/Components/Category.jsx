@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import './Category.css'; // Import a separate CSS file for styling
 
 const Category = () => {
@@ -13,10 +12,15 @@ const Category = () => {
     end_date: '',
     owner_id: ''
   });
+  const [editProject, setEditProject] = useState(null); // For editing projects
+  const [isEditing, setIsEditing] = useState(false); // Flag for editing mode
+  const [loading, setLoading] = useState(true); // For loading state
+  const [error, setError] = useState(null); // For error handling
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true); // Set loading to true while fetching
         const token = localStorage.getItem('token'); // Get the token from local storage
 
         const [projectsResponse, employeesResponse] = await Promise.all([
@@ -31,17 +35,18 @@ const Category = () => {
         if (projectsResponse.data.Status) {
           setProjects(projectsResponse.data.Result);
         } else {
-          alert(`Failed to fetch projects: ${projectsResponse.data.Error}`);
+          setError(`Failed to fetch projects: ${projectsResponse.data.Error}`);
         }
 
         if (employeesResponse.data.Status) {
           setEmployees(employeesResponse.data.Result);
         } else {
-          alert(`Failed to fetch employees: ${employeesResponse.data.Error}`);
+          setError(`Failed to fetch employees: ${employeesResponse.data.Error}`);
         }
       } catch (err) {
-        console.error('Error fetching data:', err);
-        alert('An error occurred while fetching data.');
+        setError('An error occurred while fetching data.');
+      } finally {
+        setLoading(false); // Set loading to false after fetching
       }
     };
 
@@ -55,34 +60,93 @@ const Category = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const token = localStorage.getItem('token'); // Get the token from local storage
-    console.log(token);
-    axios.post('http://localhost:3000/auth/add_project', newProject, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
+
+    if (isEditing) {
+      axios.put(`http://localhost:3000/auth/update_project/${editProject.id}`, newProject, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
       .then(result => {
         if (result.data.Status) {
-          setProjects([...projects, newProject]);
-          setNewProject({
-            name: '',
-            description: '',
-            start_date: '',
-            end_date: '',
-            owner_id: ''
-          });
+          setProjects(projects.map(p => (p.id === editProject.id ? newProject : p)));
+          resetForm();
         } else {
-          alert(`Failed to add project: ${result.data.Error}`);
+          setError(`Failed to update project: ${result.data.Error}`);
         }
-      }).catch(err => {
-        console.error('Error adding project:', err);
-        alert('An error occurred while adding the project.');
+      })
+      .catch(err => {
+        setError('An error occurred while updating the project.');
       });
+    } else {
+      axios.post('http://localhost:3000/auth/add_project', newProject, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then(result => {
+        if (result.data.Status) {
+          setProjects([...projects, { ...newProject, id: Date.now() }]);
+          resetForm();
+        } else {
+          setError(`Failed to add project: ${result.data.Error}`);
+        }
+      })
+      .catch(err => {
+        setError('An error occurred while adding the project.');
+      });
+    }
+  };
+
+  const handleEdit = (project) => {
+    setNewProject({
+      name: project.name,
+      description: project.description,
+      start_date: project.start_date,
+      end_date: project.end_date,
+      owner_id: project.owner_id
+    });
+    setEditProject(project);
+    setIsEditing(true);
+  };
+
+  const handleDelete = (projectId) => {
+    const token = localStorage.getItem('token'); // Get the token from local storage
+    axios.delete(`http://localhost:3000/auth/delete_project/${projectId}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(result => {
+      if (result.data.Status) {
+        setProjects(projects.filter(p => p.id !== projectId));
+      } else {
+        setError(`Failed to delete project: ${result.data.Error}`);
+      }
+    })
+    .catch(err => {
+      setError('An error occurred while deleting the project.');
+    });
+  };
+
+  const resetForm = () => {
+    setNewProject({
+      name: '',
+      description: '',
+      start_date: '',
+      end_date: '',
+      owner_id: ''
+    });
+    setEditProject(null);
+    setIsEditing(false);
+  };
+
+  // Helper function to format date
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString();
   };
 
   return (
     <div className='container'>
       <div className='header'>
-        <h3>Project List</h3>
+        <h3>{isEditing ? 'Edit Project' : 'Add New Project'}</h3>
       </div>
+      {loading && <p>Loading...</p>}
+      {error && <p className='error'>{error}</p>}
       <div className='form-container'>
         <form onSubmit={handleSubmit}>
           <div className='form-group'>
@@ -145,7 +209,8 @@ const Category = () => {
               ))}
             </select>
           </div>
-          <button type='submit' className='submit-button'>Add Project</button>
+          <button type='submit' className='submit-button'>{isEditing ? 'Update Project' : 'Add Project'}</button>
+          {isEditing && <button type='button' className='cancel-button' onClick={resetForm}>Cancel</button>}
         </form>
       </div>
       <div className='table-container'>
@@ -157,6 +222,7 @@ const Category = () => {
               <th>Start Date</th>
               <th>End Date</th>
               <th>Owner</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -164,9 +230,13 @@ const Category = () => {
               <tr key={p.id}>
                 <td>{p.name}</td>
                 <td>{p.description}</td>
-                <td>{p.start_date}</td>
-                <td>{p.end_date}</td>
-                <td>{employees.find(emp => emp.id === p.owner_id)?.name || 'Unknown'}</td>
+                <td>{formatDate(p.start_date)}</td>
+                <td>{formatDate(p.end_date)}</td>
+                <td>{employees.find(e => e.id === p.owner_id)?.name || 'N/A'}</td>
+                <td>
+                  <button onClick={() => handleEdit(p)} className='edit-button'>Edit</button>
+                  <button onClick={() => handleDelete(p.id)} className='delete-button'>Delete</button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -174,6 +244,6 @@ const Category = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Category;

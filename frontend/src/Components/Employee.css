@@ -98,9 +98,45 @@ body {
   }
 
   .btn-delete {
-    background: #FF5C5C;
+    background: #00DDFF;
   }
 
   .btn-delete:hover {
-    background: #FF3D3D;
+    background: #00DDFF;
   }
+
+  /* Common button styles */
+  .btn {
+    display: inline-block !important;
+    padding: 10px 20px !important;
+    background: #00DDFF !important;
+    color: #fff !important;
+    border-radius: 5px !important; /* Sharp, rectangular corners */
+    text-decoration: none !important;
+    font-size: 1.1em !important;
+    font-family: 'Roboto', sans-serif !important;
+    transition: background-color 0.3s !important;
+    cursor: pointer !important;
+    border: none !important;
+    text-align: center !important; /* Center text inside the button */
+}
+
+/* Specific styles for edit button */
+.btn-edit {
+    background: #00DDFF;
+    margin-right: 5px; /* Space between edit and delete buttons */
+}
+
+.btn-edit:hover {
+    background: #0098CC;
+}
+
+/* Specific styles for delete button */
+.btn-delete {
+    background: #FF6F6F; /* Different color to differentiate from edit button */
+}
+
+.btn-delete:hover {
+    background: #CC0000;
+}
+

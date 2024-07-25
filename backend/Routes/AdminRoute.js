@@ -127,6 +127,88 @@ router.get('/employee/:id', (req, res) => {
   });
 });
 
+router.get('/admin/:id', (req, res) => {
+  const id = req.params.id;
+  const sql = "SELECT id, email FROM admin WHERE id = ?";
+  con.query(sql, [id], (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query Error" });
+    if (result.length > 0) {
+      return res.json({ Status: true, admin: result[0] });
+    } else {
+      return res.json({ Status: false, Error: "Admin not found" });
+    }
+  });
+});
+
+// Update a project
+router.put('/update_project/:id', (req, res) => {
+  const id = req.params.id;
+  const { name, description, start_date, end_date, owner_id } = req.body;
+  const sql = "UPDATE Projects SET name = ?, description = ?, start_date = ?, end_date = ?, owner_id = ? WHERE id = ?";
+  const values = [name, description, start_date, end_date, owner_id, id];
+
+  con.query(sql, values, (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query Error" + err });
+    return res.json({ Status: true });
+  });
+});
+
+// Delete a project
+router.delete('/delete_project/:id', (req, res) => {
+  const id = req.params.id;
+  const sql = "DELETE FROM Projects WHERE id = ?";
+
+  con.query(sql, [id], (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query Error" + err });
+    return res.json({ Status: true });
+  });
+});
+
+router.get('/tasks/:employeeId', (req, res) => {
+  const employeeId = req.params.employeeId;
+  const sql = `SELECT * FROM tasks WHERE employee_id = ?`;
+  con.query(sql, [employeeId], (err, result) => {
+    if (err) return res.json({ Status: false, Error: 'Query Error' });
+    return res.json({ Status: true, Result: result });
+  });
+});
+
+// Add a new task
+router.post('/add_task', (req, res) => {
+  const { title, description, project_id, employee_id, start_date, end_date } = req.body;
+  const sql = `INSERT INTO tasks (title, description, project_id, employee_id, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?)`;
+  con.query(sql, [title, description, project_id, employee_id, start_date, end_date], (err, result) => {
+    if (err) return res.json({ Status: false, Error: 'Query Error' });
+    return res.json({ Status: true });
+  });
+});
+
+// Edit a task
+router.put('/edit_task/:id', (req, res) => {
+  const id = req.params.id;
+  const { title, description, project_id, employee_id, start_date, end_date } = req.body;
+  const sql = `UPDATE tasks SET title = ?, description = ?, project_id = ?, employee_id = ?, start_date = ?, end_date = ? WHERE id = ?`;
+  const values = [title, description, project_id, employee_id, start_date, end_date, id];
+
+  con.query(sql, values, (err, result) => {
+    if (err) return res.json({ Status: false, Error: 'Query Error' });
+    return res.json({ Status: true });
+  });
+});
+
+// Delete a task
+router.delete('/delete_task/:id', (req, res) => {
+  const id = req.params.id;
+  const sql = 'DELETE FROM tasks WHERE id = ?';
+
+  con.query(sql, [id], (err, result) => {
+    if (err) return res.json({ Status: false, Error: 'Query Error' });
+    return res.json({ Status: true });
+  });
+});
+
+
+
 // Update employee
 router.put('/edit_employee/:id', (req, res) => {
   const id = req.params.id;
@@ -256,5 +338,49 @@ router.post('/add_task', (req, res) => {
   });
 });
 
+router.put('/edit_task/:id', (req, res) => {
+  const id = req.params.id;
+  const { title, description, project_id, employee_id, start_date, end_date } = req.body;
+
+  // Log the incoming data for debugging
+  console.log('Updating task with ID:', id);
+  console.log('Data:', { title, description, project_id, employee_id, start_date, end_date });
+
+  // Construct SQL query with placeholders
+  const sql = `
+    UPDATE tasks
+    SET
+      title = COALESCE(NULLIF(?, ''), title),
+      description = COALESCE(NULLIF(?, ''), description),
+      project_id = COALESCE(NULLIF(?, ''), project_id),
+      employee_id = COALESCE(NULLIF(?, ''), employee_id),
+      start_date = COALESCE(NULLIF(?, ''), start_date),
+      end_date = COALESCE(NULLIF(?, ''), end_date)
+    WHERE id = ?
+  `;
+
+  // Use the provided values and the task ID
+  const values = [title || '', description || '', project_id || '', employee_id || '', start_date || '', end_date || '', id];
+
+  // Execute the query
+  con.query(sql, values, (err, result) => {
+    if (err) {
+      console.error('Query Error:', err); // Log the error to console
+      return res.status(500).json({ Status: false, Error: 'Query Error: ' + err.message });
+    }
+
+    // Check if any rows were affected
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ Status: false, Error: 'Task not found' });
+    }
+
+    return res.json({ Status: true });
+  });
+});
+
+
+
 export { router as adminRouter };
+
+
 

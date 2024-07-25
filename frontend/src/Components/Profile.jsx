@@ -15,25 +15,21 @@ const Profile = () => {
   });
   const [projects, setProjects] = useState([]);
   const [employees, setEmployees] = useState([]);
+  const [editTask, setEditTask] = useState(null);
 
   const getToken = () => {
-    const token = localStorage.getItem('token');
-    return token;
+    return localStorage.getItem('token');
   };
 
   const fetchAdminDetails = async () => {
     try {
       const token = getToken();
-      if (!token) {
-        throw new Error('No authentication token found');
-      }
+      if (!token) throw new Error('No authentication token found');
 
       const response = await axios.get('http://localhost:3000/auth/admin', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+        headers: { 'Authorization': `Bearer ${token}` }
       });
-      console.log('Admin Data:', response.data.admin);
+
       if (response.data.Status) {
         setAdmin(response.data.admin);
         fetchTasks(response.data.admin.id);
@@ -48,17 +44,12 @@ const Profile = () => {
   const fetchTasks = async (adminId) => {
     try {
       const token = getToken();
-      if (!token) {
-        throw new Error('No authentication token found');
-      }
-      console.log(`Admin ID: ${adminId}`);
+      if (!token) throw new Error('No authentication token found');
+
       const response = await axios.get(`http://localhost:3000/auth/tasks/${adminId}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+        headers: { 'Authorization': `Bearer ${token}` }
       });
 
-      console.log('Fetched Tasks:', response.data.Result);
       if (response.data.Status) {
         setTasks(response.data.Result);
       } else {
@@ -72,7 +63,6 @@ const Profile = () => {
   const fetchProjects = async () => {
     try {
       const response = await axios.get('http://localhost:3000/auth/projects');
-      console.log('Projects:', response.data.Result);
       if (response.data.Status) {
         setProjects(response.data.Result);
       } else {
@@ -86,7 +76,6 @@ const Profile = () => {
   const fetchEmployees = async () => {
     try {
       const response = await axios.get('http://localhost:3000/auth/employee');
-      console.log('Employees:', response.data.Result);
       if (response.data.Status) {
         setEmployees(response.data.Result);
       } else {
@@ -111,68 +100,95 @@ const Profile = () => {
     e.preventDefault();
     try {
       const token = getToken();
-      // if (!token) {
-      //   throw new Error('No authentication token found');
-      // }
+      if (!token) throw new Error('No authentication token found');
 
-      const response = await axios.post('http://localhost:3000/auth/add_task', newTask, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      let response;
+      if (editTask) {
+        response = await axios.put(`http://localhost:3000/auth/edit_task/${editTask.id}`, newTask, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+      } else {
+        response = await axios.post('http://localhost:3000/auth/add_task', newTask, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+      }
 
       if (response.data.Status) {
         if (admin && admin.id) {
-          fetchTasks(admin.id);
+          await fetchTasks(admin.id);
+          resetForm();
         }
-        setNewTask({
-          title: '',
-          description: '',
-          project_id: '',
-          employee_id: '',
-          start_date: '',
-          end_date: ''
-        });
       } else {
         alert(response.data.Error);
       }
     } catch (err) {
-      console.error('Error adding task:', err.message);
+      console.error('Error adding/updating task:', err.message);
     }
+  };
+
+  const handleEdit = (task) => {
+    setEditTask(task);
+    setNewTask({
+      title: task.title,
+      description: task.description,
+      project_id: task.project_id,
+      employee_id: task.employee_id,
+      start_date: task.start_date,
+      end_date: task.end_date
+    });
+  };
+
+  const handleDelete = async (taskId) => {
+    try {
+      const token = getToken();
+      if (!token) throw new Error('No authentication token found');
+
+      const response = await axios.delete(`http://localhost:3000/auth/delete_task/${taskId}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      if (response.data.Status) {
+        if (admin && admin.id) {
+          await fetchTasks(admin.id);
+        }
+      } else {
+        alert(response.data.Error);
+      }
+    } catch (err) {
+      console.error('Error deleting task:', err.message);
+    }
+  };
+
+  const resetForm = () => {
+    setNewTask({
+      title: '',
+      description: '',
+      project_id: '',
+      employee_id: '',
+      start_date: '',
+      end_date: ''
+    });
+    setEditTask(null);
   };
 
   return (
     <div className="profile-container">
-      <h2 className='mt-4'>Tasks</h2>
+      <div className='header'>
+        <h2>{editTask ? 'Edit Task' : 'Add New Task'}</h2>
+      </div>
       <div className="form-container">
         <form onSubmit={handleSubmit}>
           <div className='form-group'>
             <label>Title</label>
-            <input
-              type='text'
-              name='title'
-              className='form-input'
-              value={newTask.title}
-              onChange={handleChange}
-            />
+            <input type='text' name='title' className='form-input' value={newTask.title} onChange={handleChange} />
           </div>
           <div className='form-group'>
             <label>Description</label>
-            <textarea
-              name='description'
-              className='form-textarea'
-              value={newTask.description}
-              onChange={handleChange}
-            ></textarea>
+            <textarea name='description' className='form-textarea' value={newTask.description} onChange={handleChange}></textarea>
           </div>
           <div className='form-group'>
             <label>Project</label>
-            <select
-              name='project_id'
-              className='form-select'
-              value={newTask.project_id}
-              onChange={handleChange}
-            >
+            <select name='project_id' className='form-select' value={newTask.project_id} onChange={handleChange}>
               <option value=''>Select Project</option>
               {projects.map(project => (
                 <option key={project.id} value={project.id}>{project.name}</option>
@@ -181,12 +197,7 @@ const Profile = () => {
           </div>
           <div className='form-group'>
             <label>Employee</label>
-            <select
-              name='employee_id'
-              className='form-select'
-              value={newTask.employee_id}
-              onChange={handleChange}
-            >
+            <select name='employee_id' className='form-select' value={newTask.employee_id} onChange={handleChange}>
               <option value=''>Select Employee</option>
               {employees.map(employee => (
                 <option key={employee.id} value={employee.id}>{employee.name}</option>
@@ -195,25 +206,20 @@ const Profile = () => {
           </div>
           <div className='form-group'>
             <label>Start Date</label>
-            <input
-              type='date'
-              name='start_date'
-              className='form-input'
-              value={newTask.start_date}
-              onChange={handleChange}
-            />
+            <input type='date' name='start_date' className='form-input' value={newTask.start_date} onChange={handleChange} />
           </div>
           <div className='form-group'>
             <label>End Date</label>
-            <input
-              type='date'
-              name='end_date'
-              className='form-input'
-              value={newTask.end_date}
-              onChange={handleChange}
-            />
+            <input type='date' name='end_date' className='form-input' value={newTask.end_date} onChange={handleChange} />
           </div>
-          <button type='submit' className='submit-button'>Add Task</button>
+          <button type='submit' className='submit-button'>
+            {editTask ? 'Update Task' : 'Add Task'}
+          </button>
+          {editTask && (
+            <button type='button' className='cancel-button' onClick={resetForm}>
+              Cancel
+            </button>
+          )}
         </form>
       </div>
       <div className='table-container'>
@@ -226,6 +232,7 @@ const Profile = () => {
               <th>Employee</th>
               <th>Start Date</th>
               <th>End Date</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -242,12 +249,16 @@ const Profile = () => {
                     <td>{employee ? employee.name : 'N/A'}</td>
                     <td>{new Date(task.start_date).toLocaleDateString()}</td>
                     <td>{new Date(task.end_date).toLocaleDateString()}</td>
+                    <td>
+                      <button onClick={() => handleEdit(task)} className='action-button edit-button'>Edit</button>
+                      <button onClick={() => handleDelete(task.id)} className='action-button delete-button'>Delete</button>
+                    </td>
                   </tr>
                 );
               })
             ) : (
               <tr>
-                <td colSpan="6">No tasks available</td>
+                <td colSpan="7">No tasks available</td>
               </tr>
             )}
           </tbody>
