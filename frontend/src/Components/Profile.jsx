@@ -16,116 +16,131 @@ const Profile = () => {
   const [projects, setProjects] = useState([]);
   const [employees, setEmployees] = useState([]);
 
+  const getToken = () => {
+    const token = localStorage.getItem('token');
+    console.log('Token Retrieved:', token);
+    return token;
+  };
+
+  const fetchAdminDetails = async () => {
+    try {
+      const token = getToken();
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
+
+      const response = await axios.get('http://localhost:3000/auth/admin', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      console.log('Admin Data:', response.data.Result);
+      if (response.data.Status) {
+        setAdmin(response.data.Result);
+        fetchTasks(response.data.Result.id);
+      } else {
+        throw new Error(response.data.Error || 'Failed to fetch admin details');
+      }
+    } catch (err) {
+      console.error('Error fetching admin details:', err.message);
+    }
+  };
+
+  const fetchTasks = async (adminId) => {
+    try {
+      const token = getToken();
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
+
+      const response = await axios.get(`http://localhost:3000/auth/tasks/${adminId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      console.log('Fetched Tasks:', response.data.Result);
+      if (response.data.Status) {
+        setTasks(response.data.Result);
+      } else {
+        throw new Error(response.data.Error || 'Failed to fetch tasks');
+      }
+    } catch (err) {
+      console.error('Error fetching tasks:', err.message);
+    }
+  };
+
+  const fetchProjects = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/auth/projects');
+      console.log('Projects:', response.data.Result);
+      if (response.data.Status) {
+        setProjects(response.data.Result);
+      } else {
+        throw new Error(response.data.Error || 'Failed to fetch projects');
+      }
+    } catch (err) {
+      console.error('Error fetching projects:', err.message);
+    }
+  };
+
+  const fetchEmployees = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/auth/employee');
+      console.log('Employees:', response.data.Result);
+      if (response.data.Status) {
+        setEmployees(response.data.Result);
+      } else {
+        throw new Error(response.data.Error || 'Failed to fetch employees');
+      }
+    } catch (err) {
+      console.error('Error fetching employees:', err.message);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          throw new Error('No authentication token found');
-        }
-
-        // Fetch admin details
-        const adminResponse = await axios.get('http://localhost:3000/auth/admin', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-
-        if (adminResponse.data.Status) {
-          setAdmin(adminResponse.data.Result);
-          // Fetch tasks
-          await fetchTasks(adminResponse.data.Result.id);
-        } else {
-          throw new Error(adminResponse.data.Error || 'Failed to fetch admin details');
-        }
-
-        // Fetch projects
-        const projectsResponse = await axios.get('http://localhost:3000/auth/projects', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-
-        if (projectsResponse.data.Status) {
-          setProjects(projectsResponse.data.Result);
-        } else {
-          throw new Error(projectsResponse.data.Error || 'Failed to fetch projects');
-        }
-
-        // Fetch employees
-        const employeesResponse = await axios.get('http://localhost:3000/auth/employee', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-
-        if (employeesResponse.data.Status) {
-          setEmployees(employeesResponse.data.Result);
-        } else {
-          throw new Error(employeesResponse.data.Error || 'Failed to fetch employees');
-        }
-
-      } catch (err) {
-        console.error('Error fetching data:', err.message);
-      }
-    };
-
-    const fetchTasks = async (adminId) => {
-      try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          throw new Error('No authentication token found');
-        }
-
-        const response = await axios.get(`http://localhost:3000/auth/tasks/${adminId}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-
-        if (response.data.Status) {
-          setTasks(response.data.Result);
-        } else {
-          throw new Error(response.data.Error || 'Failed to fetch tasks');
-        }
-      } catch (err) {
-        console.error('Error fetching tasks:', err.message);
-      }
-    };
-
-    fetchData();
+    fetchAdminDetails();
+    fetchProjects();
+    fetchEmployees();
   }, []);
 
   const handleChange = (e) => {
     setNewTask({ ...newTask, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token');
-    axios.post('http://localhost:3000/auth/add_task', newTask, {
-      headers: {
-        'Authorization': `Bearer ${token}`
+    try {
+      const token = getToken();
+      if (!token) {
+        throw new Error('No authentication token found');
       }
-    })
-      .then(result => {
-        if (result.data.Status) {
-          // Refresh tasks after adding a new one
-          fetchTasks(admin.id);
-          setNewTask({
-            title: '',
-            description: '',
-            project_id: '',
-            employee_id: '',
-            start_date: '',
-            end_date: ''
-          });
-        } else {
-          alert(result.data.Error);
+
+      const response = await axios.post('http://localhost:3000/auth/add_task', newTask, {
+        headers: {
+          'Authorization': `Bearer ${token}`
         }
-      }).catch(err => {
-        console.error('Error adding task:', err.message);
       });
+
+      if (response.data.Status) {
+        if (admin && admin.id) {
+          fetchTasks(admin.id);
+        }
+        setNewTask({
+          title: '',
+          description: '',
+          project_id: '',
+          employee_id: '',
+          start_date: '',
+          end_date: ''
+        });
+      } else {
+        alert(response.data.Error);
+      }
+    } catch (err) {
+      console.error('Error adding task:', err.message);
+    }
   };
 
   return (
@@ -141,7 +156,6 @@ const Profile = () => {
               className='form-input'
               value={newTask.title}
               onChange={handleChange}
-              required
             />
           </div>
           <div className='form-group'>
@@ -151,7 +165,6 @@ const Profile = () => {
               className='form-textarea'
               value={newTask.description}
               onChange={handleChange}
-              required
             ></textarea>
           </div>
           <div className='form-group'>
@@ -161,7 +174,6 @@ const Profile = () => {
               className='form-select'
               value={newTask.project_id}
               onChange={handleChange}
-              required
             >
               <option value=''>Select Project</option>
               {projects.map(project => (
@@ -176,7 +188,6 @@ const Profile = () => {
               className='form-select'
               value={newTask.employee_id}
               onChange={handleChange}
-              required
             >
               <option value=''>Select Employee</option>
               {employees.map(employee => (
@@ -192,7 +203,6 @@ const Profile = () => {
               className='form-input'
               value={newTask.start_date}
               onChange={handleChange}
-              required
             />
           </div>
           <div className='form-group'>
@@ -203,7 +213,6 @@ const Profile = () => {
               className='form-input'
               value={newTask.end_date}
               onChange={handleChange}
-              required
             />
           </div>
           <button type='submit' className='submit-button'>Add Task</button>

@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import './style.css'; // Import the CSS file if not already imported
+import './Employee.css'; // Import the CSS file if not already imported
 
 const Employee = () => {
   const [employee, setEmployee] = useState([]);
@@ -31,15 +31,15 @@ const Employee = () => {
   };
 
   return (
-    <div className="px-5 mt-3">
-      <div className="d-flex justify-content-center">
+    <div className="container">
+      <div className="header">
         <h3>Employee List</h3>
       </div>
-      <Link to="/dashboard/add_employee" className="btn btn-success">
+      <Link to="/dashboard/add_employee" className="add-btn">
         Add Employee
       </Link>
-      <div className="mt-3">
-        <table className="table">
+      <div className="table-container">
+        <table className="employee-table">
           <thead>
             <tr>
               <th>Name</th>
@@ -57,22 +57,22 @@ const Employee = () => {
                 <td>
                   <img
                     src={`http://localhost:3000/Images/` + e.image}
-                    className="employee_image"
+                    className="employee-image"
                     alt={e.name}
                   />
                 </td>
                 <td>{e.email}</td>
                 <td>{e.address}</td>
-                <td>{e.salary}</td>
+                <td>${e.salary}</td>
                 <td>
                   <Link
                     to={`/dashboard/edit_employee/` + e.id}
-                    className="btn btn-info btn-sm me-2"
+                    className="btn btn-edit"
                   >
                     Edit
                   </Link>
                   <button
-                    className="btn btn-warning btn-sm"
+                    className="btn btn-delete"
                     onClick={() => handleDelete(e.id)}
                   >
                     Delete

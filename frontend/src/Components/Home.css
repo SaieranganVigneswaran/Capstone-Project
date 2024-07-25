@@ -1,0 +1,138 @@
+/* Home.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    padding: 20px;
+    background: linear-gradient(135deg, #1e1e1e, #333);
+    border-radius: 10px;
+    color: #e0e0e0; /* Light grey color for overall text */
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.card-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.card {
+    padding: 20px;
+    border-radius: 10px;
+    background: #2c2c2c; /* Dark background for the card */
+    border: 1px solid #444;
+    width: 30%;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.card h4 {
+    font-size: 1.5em;
+    color: #00DDFF; /* Bright cyan for headings */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.card hr {
+    margin: 10px 0;
+}
+
+.card div {
+    font-size: 1.2em;
+    color: #B0B0B0; /* Light grey for general text */
+}
+
+.table-container {
+    margin-top: 20px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #222;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table thead {
+    background: #333;
+    color: #00DDFF; /* Bright cyan for table headers */
+}
+
+.table th, .table td {
+    padding: 12px;
+    text-align: left;
+    font-size: 0.9em;
+    color: #B0B0B0; /* Light grey for table text */
+}
+
+.table th {
+    color: #00DDFF; /* Bright cyan for table header text */
+}
+
+.table td {
+    color: #000000; /* Black for email text */
+}
+
+.table tr:nth-child(even) {
+    background: #1e1e1e;
+}
+
+.table tr:nth-child(odd) {
+    background: #2c2c2c;
+}
+
+.table .actions-header {
+    text-align: center;
+    font-weight: bold;
+    color: #00DDFF; /* Bright cyan for actions header */
+    padding: 12px;
+}
+
+.table .actions {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    align-items: center;
+}
+
+.table .actions button {
+    border: none;
+    padding: 10px 16px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    color: #e0e0e0; /* Light grey for button text */
+    background: #333; /* Dark background for buttons */
+    margin-left: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.table .btn-info {
+    background: #00DDFF; /* Bright cyan for info button */
+}
+
+.table .btn-info:hover {
+    background: #0098CC;
+    transform: scale(1.05);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+.table .btn-warning {
+    background: #555; /* Darker grey for warning button */
+}
+
+.table .btn-warning:hover {
+    background: #666;
+    transform: scale(1.05);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+h3 {
+    text-align: center; /* Center the "List of Admins" text */
+    color: #00DDFF; /* Bright cyan for the heading */
+}

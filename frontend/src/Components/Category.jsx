@@ -17,9 +17,15 @@ const Category = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const token = localStorage.getItem('token'); // Get the token from local storage
+
         const [projectsResponse, employeesResponse] = await Promise.all([
-          axios.get('http://localhost:3000/auth/projects'),
-          axios.get('http://localhost:3000/auth/employee')
+          axios.get('http://localhost:3000/auth/projects', {
+            headers: { Authorization: `Bearer ${token}` }
+          }),
+          axios.get('http://localhost:3000/auth/employee', {
+            headers: { Authorization: `Bearer ${token}` }
+          })
         ]);
 
         if (projectsResponse.data.Status) {
@@ -48,7 +54,11 @@ const Category = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:3000/auth/add_project', newProject)
+    const token = localStorage.getItem('token'); // Get the token from local storage
+
+    axios.post('http://localhost:3000/auth/add_project', newProject, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
       .then(result => {
         if (result.data.Status) {
           setProjects([...projects, newProject]);
@@ -71,7 +81,7 @@ const Category = () => {
   return (
     <div className='container'>
       <div className='header'>
-        <h3>PROJECT LIST</h3>
+        <h3>Project List</h3>
       </div>
       <div className='form-container'>
         <form onSubmit={handleSubmit}>

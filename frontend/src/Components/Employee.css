@@ -1,0 +1,106 @@
+/* Style for modern font and colors */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    background: #121212; /* Dark background for the whole page */
+  }
+
+  .container {
+    padding: 20px;
+    background: linear-gradient(135deg, #1e1e1e, #333);
+    border-radius: 10px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .header h3 {
+    font-size: 2em;
+    color: #00DDFF;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+    font-family: 'Roboto', sans-serif;
+  }
+
+  .add-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #00DDFF;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-family: 'Roboto', sans-serif;
+    transition: background-color 0.3s;
+  }
+
+  .add-btn:hover {
+    background: #0098CC;
+  }
+
+  .table-container {
+    margin-top: 20px;
+  }
+
+  .employee-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .employee-table thead {
+    background: #333;
+    color: #00DDFF;
+  }
+
+  .employee-table th, .employee-table td {
+    padding: 12px;
+    text-align: left;
+  }
+
+  .employee-table tr:nth-child(even) {
+    background: #1e1e1e;
+  }
+
+  .employee-table tr:nth-child(odd) {
+    background: #2c2c2c;
+  }
+
+  .employee-table td {
+    color: #ccc;
+  }
+
+  .employee-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+
+  .btn {
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    cursor: pointer;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  .btn-edit {
+    background: #00DDFF;
+    margin-right: 5px;
+  }
+
+  .btn-edit:hover {
+    background: #0098CC;
+  }
+
+  .btn-delete {
+    background: #FF5C5C;
+  }
+
+  .btn-delete:hover {
+    background: #FF3D3D;
+  }

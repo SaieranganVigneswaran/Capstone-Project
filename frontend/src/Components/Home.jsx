@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Home.css';
 
 const Home = () => {
     const [adminTotal, setAdminTotal] = useState(0);
@@ -79,46 +80,31 @@ const Home = () => {
     };
 
     return (
-        <div>
-            <div className='p-3 d-flex justify-content-around mt-3'>
-                <div className='px-3 pt-2 pb-3 border shadow-sm w-25'>
-                    <div className='text-center pb-1'>
-                        <h4>Admin</h4>
-                    </div>
+        <div className="container">
+            <div className='card-container'>
+                <div className='card'>
+                    <h4>Admin</h4>
                     <hr />
-                    <div className='d-flex justify-content-between'>
-                        <h5>Total:</h5>
-                        <h5>{adminTotal}</h5>
-                    </div>
+                    <div>Total: {adminTotal}</div>
                 </div>
-                <div className='px-3 pt-2 pb-3 border shadow-sm w-25'>
-                    <div className='text-center pb-1'>
-                        <h4>Employee</h4>
-                    </div>
+                <div className='card'>
+                    <h4>Employee</h4>
                     <hr />
-                    <div className='d-flex justify-content-between'>
-                        <h5>Total:</h5>
-                        <h5>{employeeTotal}</h5>
-                    </div>
+                    <div>Total: {employeeTotal}</div>
                 </div>
-                <div className='px-3 pt-2 pb-3 border shadow-sm w-25'>
-                    <div className='text-center pb-1'>
-                        <h4>Salary</h4>
-                    </div>
+                <div className='card'>
+                    <h4>Salary</h4>
                     <hr />
-                    <div className='d-flex justify-content-between'>
-                        <h5>Total:</h5>
-                        <h5>${salaryTotal}</h5>
-                    </div>
+                    <div>Total: ${salaryTotal}</div>
                 </div>
             </div>
-            <div className='mt-4 px-5 pt-3'>
+            <div className='table-container'>
                 <h3>List of Admins</h3>
                 <table className='table'>
                     <thead>
                         <tr>
                             <th>Email</th>
-                            <th>Action</th>
+                            <th className="actions-header">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -126,9 +112,9 @@ const Home = () => {
                             admins.map(a => (
                                 <tr key={a.id}>
                                     <td>{a.email}</td>
-                                    <td>
+                                    <td className="actions">
                                         <button
-                                            className="btn btn-info btn-sm me-2"
+                                            className="btn btn-info btn-sm"
                                             onClick={() => handleEdit(a.id)}
                                         >
                                             Edit
