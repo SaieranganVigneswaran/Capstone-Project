@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import './style.css';
 import axios from 'axios';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './style.css';
 
 const EmployeeLogin = () => {
     const [values, setValues] = useState({
@@ -18,6 +18,10 @@ const EmployeeLogin = () => {
         axios.post('http://localhost:3000/employee/employee_login', values)
             .then(result => {
                 if (result.data.loginStatus) {
+                    if (result.data.token) {
+                        localStorage.setItem("token", result.data.token);
+                        console.log(result.data.token);
+                    }
                     localStorage.setItem("valid", true);
                     setLoginStatus('success');
                     navigate('/employee_detail/' + result.data.id);

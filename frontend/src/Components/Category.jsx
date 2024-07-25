@@ -55,7 +55,7 @@ const Category = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const token = localStorage.getItem('token'); // Get the token from local storage
-
+    console.log(token);
     axios.post('http://localhost:3000/auth/add_project', newProject, {
       headers: { Authorization: `Bearer ${token}` }
     })

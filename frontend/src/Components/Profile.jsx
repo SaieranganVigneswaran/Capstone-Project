@@ -18,7 +18,6 @@ const Profile = () => {
 
   const getToken = () => {
     const token = localStorage.getItem('token');
-    console.log('Token Retrieved:', token);
     return token;
   };
 
@@ -34,11 +33,10 @@ const Profile = () => {
           'Authorization': `Bearer ${token}`
         }
       });
-
-      console.log('Admin Data:', response.data.Result);
+      console.log('Admin Data:', response.data.admin);
       if (response.data.Status) {
-        setAdmin(response.data.Result);
-        fetchTasks(response.data.Result.id);
+        setAdmin(response.data.admin);
+        fetchTasks(response.data.admin.id);
       } else {
         throw new Error(response.data.Error || 'Failed to fetch admin details');
       }
@@ -53,7 +51,7 @@ const Profile = () => {
       if (!token) {
         throw new Error('No authentication token found');
       }
-
+      console.log(`Admin ID: ${adminId}`);
       const response = await axios.get(`http://localhost:3000/auth/tasks/${adminId}`, {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -113,9 +111,9 @@ const Profile = () => {
     e.preventDefault();
     try {
       const token = getToken();
-      if (!token) {
-        throw new Error('No authentication token found');
-      }
+      // if (!token) {
+      //   throw new Error('No authentication token found');
+      // }
 
       const response = await axios.post('http://localhost:3000/auth/add_task', newTask, {
         headers: {

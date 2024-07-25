@@ -19,6 +19,9 @@ const Login = () => {
         axios.post('http://localhost:3000/auth/adminlogin', values)
             .then(result => {
                 if (result.data.loginStatus) {
+                    if (result.data.token) {
+                        localStorage.setItem("token", result.data.token);
+                    }
                     localStorage.setItem("valid", true);
                     setLoginStatus('success');
                     setIsAnimating(false); // Stop animation
