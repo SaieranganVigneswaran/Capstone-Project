@@ -1,9 +1,9 @@
-import express from 'express';
-import con from '../utils/db.js';
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import express from 'express';
+import jwt from 'jsonwebtoken';
 import multer from 'multer';
 import path from 'path';
+import con from '../utils/db.js';
 
 const router = express.Router();
 
@@ -28,7 +28,7 @@ router.post('/adminlogin', (req, res) => {
             { expiresIn: '1d' }
           );
           res.cookie('token', token);
-          return res.json({ loginStatus: true });
+          return res.json({ loginStatus: true, token: token });
         } else {
           return res.json({ loginStatus: false, Error: 'Wrong email or password' });
         }
@@ -257,3 +257,4 @@ router.post('/add_task', (req, res) => {
 });
 
 export { router as adminRouter };
+
