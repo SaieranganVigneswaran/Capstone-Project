@@ -38,6 +38,22 @@ router.post("/employee_login", (req, res) => {
         return res.json(result)
     })
   })
+  router.get('/project_detail/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM projects where owner_id = ?"
+    con.query(sql, [id], (err, result) => {
+        if(err) return res.json({Status: false});
+        return res.json(result)
+    })
+  })
+  router.get('/task_detail/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM tasks where employee_id = ?"
+    con.query(sql, [id], (err, result) => {
+        if(err) return res.json({Status: false});
+        return res.json(result)
+    })
+  })
 
   router.get('/logout', (req, res) => {
     res.clearCookie('token')

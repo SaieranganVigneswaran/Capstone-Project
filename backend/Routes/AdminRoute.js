@@ -164,14 +164,14 @@ router.delete('/delete_project/:id', (req, res) => {
   });
 });
 
-router.get('/tasks/:employeeId', (req, res) => {
-  const employeeId = req.params.employeeId;
-  const sql = `SELECT * FROM tasks WHERE employee_id = ?`;
-  con.query(sql, [employeeId], (err, result) => {
-    if (err) return res.json({ Status: false, Error: 'Query Error' });
-    return res.json({ Status: true, Result: result });
-  });
-});
+// router.get('/tasks/:employeeId', (req, res) => {
+//   const employeeId = req.params.employeeId;
+//   const sql = `SELECT * FROM tasks WHERE employee_id = ?`;
+//   con.query(sql, [employeeId], (err, result) => {
+//     if (err) return res.json({ Status: false, Error: 'Query Error' });
+//     return res.json({ Status: true, Result: result });
+//   });
+// });
 
 // Add a new task
 router.post('/add_task', (req, res) => {
@@ -304,6 +304,7 @@ router.get('/projects', (req, res) => {
   const sql = "SELECT * FROM Projects";
   con.query(sql, (err, result) => {
     if (err) return res.json({ Status: false, Error: "Query Error" });
+    console.log("PROJECTS");
     return res.json({ Status: true, Result: result });
   });
 });
@@ -321,9 +322,11 @@ router.post('/add_project', (req, res) => {
 // Fetch tasks for a specific employee
 router.get('/tasks/:employeeId', (req, res) => {
   const employeeId = req.params.employeeId;
-  const sql = `SELECT * FROM tasks WHERE employee_id = ?`;
-  con.query(sql, [employeeId], (err, result) => {
+  const sql = `SELECT * FROM tasks`;
+  con.query(sql, (err, result) => {
     if (err) return res.json({ Status: false, Error: 'Query Error' });
+    console.log("HELLO");
+    console.log(result);
     return res.json({ Status: true, Result: result });
   });
 });

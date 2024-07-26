@@ -61,7 +61,7 @@ const Dashboard = () => {
       </div>
       <div className="main-content">
         <div className="header">
-          <h4>Employee Management System</h4>
+          <h4>Employee Portal</h4>
         </div>
         <Outlet />
       </div>
