@@ -1,30 +1,34 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import './EmployeeDetail.css';
 
 const EmployeeDetail = () => {
     const [employee, setEmployee] = useState({});
-    const [projects, setProjects] = useState([]);
     const [tasks, setTasks] = useState([]);
+    const [showDropdown, setShowDropdown] = useState(false);
     const { id } = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://localhost:3000/employee/detail/' + id)
+        // Fetch employee details
+        axios.get(`http://localhost:3000/employee/detail/${id}`)
             .then(result => {
                 setEmployee(result.data[0]);
             })
             .catch(err => console.log(err));
-        
-        axios.get('http://localhost:3000/employee/project_detail/' + id)
+
+        // Fetch tasks associated with the employee
+        axios.get(`http://localhost:3000/employee/task_detail/${id}`)
             .then(result => {
-                setProjects(result.data);
-            })
-            .catch(err => console.log(err));
-        
-        axios.get('http://localhost:3000/employee/task_detail/' + id)
-            .then(result => {
-                setTasks(result.data);
+                if (result.data.Status) {
+                    const filteredTasks = result.data.Result.filter(task => task.status !== 'approved');
+                    console.log('Filtered Tasks:', filteredTasks); // Log filtered tasks
+                    setTasks(filteredTasks);
+                } else {
+                    console.error(result.data.Error);
+                }
             })
             .catch(err => console.log(err));
     }, [id]);
@@ -39,58 +43,100 @@ const EmployeeDetail = () => {
             }).catch(err => console.log(err));
     }
 
-    const getTasksByProjectId = (projectId) => {
-        return tasks.filter(task => task.project_id === projectId);
+    const onDragEnd = (result) => {
+        const { destination, source, draggableId } = result;
+
+        // If the item is dropped outside a droppable area
+        if (!destination) {
+            return;
+        }
+
+        // If the item is dropped in the same place
+        if (
+            destination.droppableId === source.droppableId &&
+            destination.index === source.index
+        ) {
+            return;
+        }
+
+        const newStatus = destination.droppableId;
+        const taskId = parseInt(draggableId);
+
+        // Update the task status locally
+        setTasks(prevTasks =>
+            prevTasks.map(task =>
+                task.id === taskId ? { ...task, status: newStatus } : task
+            )
+        );
+
+        // Update task status on the server
+        axios.put(`http://localhost:3000/employee/update_task_status/${taskId}`, { status: newStatus })
+            .then(result => {
+                if (!result.data.Status) {
+                    alert(result.data.Error);
+                }
+            })
+            .catch(err => console.log(err));
     }
 
+    const toggleDropdown = () => {
+        setShowDropdown(prev => !prev);
+    };
+
+    const employeeName = employee.name || 'Employee'; // Get employee name for tooltip
+
     return (
-        <div>
-            <div className="p-2 d-flex justify-content-center shadow">
-                <h4>Employee Management System</h4>
-            </div>
-            <div className='d-flex justify-content-center flex-column align-items-center mt-3'>
-                <img src={`http://localhost:3000/Images/${employee.image}`} className='emp_det_image' alt='Employee' />
-                <div className='d-flex align-items-center flex-column mt-5'>
-                    <h3>Name: {employee.name}</h3>
-                    <h3>Email: {employee.email}</h3>
-                    <h3>Salary: ${employee.salary}</h3>
-                </div>
-                <div>
-                    <button className='btn btn-primary me-2'>Edit</button>
-                    <button className='btn btn-danger' onClick={handleLogout}>Logout</button>
+        <div className="profile-container">
+            <div className="header">
+                <h2>Employee Management System</h2>
+                <div className="profile-icon" onClick={toggleDropdown} title={`Hi ${employeeName}`}>
+                    <span>🧑‍💻</span>
+                    {showDropdown && (
+                        <div className="dropdown">
+                            <a href={`/about/${id}`} className="dropdown-item">About</a>
+                            <button className="dropdown-item" onClick={handleLogout}>Logout</button>
+                        </div>
+                    )}
                 </div>
             </div>
-            <div className='d-flex justify-content-center flex-column align-items-center mt-3'>
-                <h4>Projects and Tasks</h4>
-                {projects.length > 0 ? (
-                    <ul className='list-group'>
-                        {projects.map((project) => (
-                            <li key={project.id} className='list-group-item'>
-                                <h5>Project Name: {project.name}</h5>
-                                <p>Description: {project.description}</p>
-                                <p>Start Date: {project.start_date}</p>
-                                <p>End Date: {project.end_date}</p>
-                                <h6>Tasks:</h6>
-                                {getTasksByProjectId(project.id).length > 0 ? (
-                                    <ul className='list-group'>
-                                        {getTasksByProjectId(project.id).map((task) => (
-                                            <li key={task.id} className='list-group-item'>
-                                                <h5>Task Name: {task.title}</h5>
-                                                <p>Description: {task.description}</p>
-                                                <p>Start Date: {task.start_date}</p>
-                                                <p>End Date: {task.end_date}</p>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                ) : (
-                                    <p>No tasks assigned to this project.</p>
+            <div className='task-board mt-3'>
+                <h4 className="tasks-heading">Your Tasks</h4> {/* Separate heading */}
+                <DragDropContext onDragEnd={onDragEnd}>
+                    <div className="task-columns">
+                        {['new', 'in progress', 'completed'].map((status) => (
+                            <Droppable droppableId={status} key={status}>
+                                {(provided) => (
+                                    <div
+                                        className={`task-column ${status}`}
+                                        {...provided.droppableProps}
+                                        ref={provided.innerRef}
+                                    >
+                                        <h5>{status.toUpperCase()}</h5>
+                                        {tasks
+                                            .filter(task => task.status === status) // Ensure correct filtering
+                                            .map((task, index) => (
+                                                <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
+                                                    {(provided) => (
+                                                        <div
+                                                            ref={provided.innerRef}
+                                                            {...provided.draggableProps}
+                                                            {...provided.dragHandleProps}
+                                                            className="task-card"
+                                                        >
+                                                            <h6>{task.title}</h6>
+                                                            <p>Project: {task.project_name}</p>
+                                                            <p>Description: {task.description}</p>
+                                                        </div>
+                                                    )}
+                                                </Draggable>
+                                            ))}
+                                        {provided.placeholder}
+                                    </div>
                                 )}
-                            </li>
+                            </Droppable>
                         ))}
-                    </ul>
-                ) : (
-                    <p>No projects assigned.</p>
-                )}
+                    </div>
+                </DragDropContext>
             </div>
         </div>
     );

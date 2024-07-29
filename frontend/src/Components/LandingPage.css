@@ -11,9 +11,9 @@
 
 /* Animated Background Gradient */
 @keyframes gradientAnimation {
-    0% { background: linear-gradient(45deg, #00DDFF, #111); }
-    50% { background: linear-gradient(45deg, #ff1d58, #111); }
-    100% { background: linear-gradient(45deg, #00DDFF, #111); }
+    0% { background: linear-gradient(45deg, #FEFFFF, #111); }
+    50% { background: linear-gradient(45deg, #3AAFA9, #111); }
+    100% { background: linear-gradient(45deg, #FEFFFF, #111); }
 }
 
 /* Hero Section */

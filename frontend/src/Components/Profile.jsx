@@ -11,7 +11,8 @@ const Profile = () => {
     project_id: '',
     employee_id: '',
     start_date: '',
-    end_date: ''
+    end_date: '',
+    status: 'new' // Default status
   });
   const [projects, setProjects] = useState([]);
   const [employees, setEmployees] = useState([]);
@@ -96,6 +97,27 @@ const Profile = () => {
     setNewTask({ ...newTask, [e.target.name]: e.target.value });
   };
 
+  const handleStatusChange = async (taskId, status) => {
+    try {
+      const token = getToken();
+      if (!token) throw new Error('No authentication token found');
+
+      const response = await axios.put(`http://localhost:3000/auth/update_task_status/${taskId}`, { status }, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      if (response.data.Status) {
+        if (admin && admin.id) {
+          await fetchTasks(admin.id);
+        }
+      } else {
+        alert(response.data.Error);
+      }
+    } catch (err) {
+      console.error('Error updating task status:', err.message);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -134,7 +156,8 @@ const Profile = () => {
       project_id: task.project_id,
       employee_id: task.employee_id,
       start_date: task.start_date,
-      end_date: task.end_date
+      end_date: task.end_date,
+      status: task.status // Include status in the edit
     });
   };
 
@@ -166,7 +189,8 @@ const Profile = () => {
       project_id: '',
       employee_id: '',
       start_date: '',
-      end_date: ''
+      end_date: '',
+      status: 'new' // Reset status to default
     });
     setEditTask(null);
   };
@@ -232,33 +256,41 @@ const Profile = () => {
               <th>Employee</th>
               <th>Start Date</th>
               <th>End Date</th>
+              <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {tasks.length > 0 ? (
               tasks.map(task => {
-                const project = projects.find(p => p.id === Number(task.project_id));
-                const employee = employees.find(e => e.id === Number(task.employee_id));
-
+                const project = projects.find(p => p.id === task.project_id);
+                const employee = employees.find(e => e.id === task.employee_id);
                 return (
                   <tr key={task.id}>
                     <td>{task.title}</td>
                     <td>{task.description}</td>
                     <td>{project ? project.name : 'N/A'}</td>
                     <td>{employee ? employee.name : 'N/A'}</td>
-                    <td>{new Date(task.start_date).toLocaleDateString()}</td>
-                    <td>{new Date(task.end_date).toLocaleDateString()}</td>
+                    <td>{task.start_date}</td>
+                    <td>{task.end_date}</td>
                     <td>
-                      <button onClick={() => handleEdit(task)} className='action-button edit-button'>Edit</button>
-                      <button onClick={() => handleDelete(task.id)} className='action-button delete-button'>Delete</button>
+                      <select value={task.status} onChange={(e) => handleStatusChange(task.id, e.target.value)}>
+                        <option value="new">New</option>
+                        <option value="in progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                        {admin && <option value="approved">Approved</option>}
+                      </select>
+                    </td>
+                    <td>
+                      <button onClick={() => handleEdit(task)} className='edit-button'>Edit</button>
+                      <button onClick={() => handleDelete(task.id)} className='delete-button'>Delete</button>
                     </td>
                   </tr>
                 );
               })
             ) : (
               <tr>
-                <td colSpan="7">No tasks available</td>
+                <td colSpan="8">No tasks available</td>
               </tr>
             )}
           </tbody>

@@ -62,7 +62,7 @@ const LandingPage = () => {
     <div className="landing-page">
       <ParticlesBg type="cobweb" bg={true} />
       <div className="hero-section">
-        <h1 className="neon-text">Welcome to Employee Management Platform</h1>
+        <h1 className="neon-text">Welcome to Project Management Portal</h1>
         <p className="neon-text">One platform for all your management needs</p>
         <a href="/next" className="cta-button">Get Started</a>
       </div>

@@ -17,6 +17,8 @@ import EmployeeLogin from './Components/EmployeeLogin';
 import EmployeeDetail from './Components/EmployeeDetail';
 import PrivateRoute from './Components/PrivateRoute';
 import NextPage from './Components/NextPage';
+import About from './Components/About';
+
 
 function App() {
   return (
@@ -28,6 +30,7 @@ function App() {
         <Route path='/adminlogin' element={<Login />} />
         <Route path='/employee_login' element={<EmployeeLogin />} />
         <Route path='/employee_detail/:id' element={<EmployeeDetail />} />
+        <Route path='/about/:id' element={<About />} />
         <Route path='/dashboard' element={
           <PrivateRoute>
             <Dashboard />

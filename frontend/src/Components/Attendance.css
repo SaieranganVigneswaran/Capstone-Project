@@ -1,0 +1,33 @@
+/* Attendance.css */
+.attendance-container {
+    text-align: center;
+    margin: 20px;
+}
+
+.attendance-button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.attendance-button.present {
+    background-color: #00DDFF;
+    color: white;
+}
+
+.attendance-button.absent {
+    background-color: #ff1d58; /* Yass Queen */
+    color: white;
+}
+
+.attendance-button.submit {
+    background-color: #0049B7; /* Brutal Blue */
+    color: white;
+}
+
+.attendance-button:hover {
+    opacity: 0.8;
+}

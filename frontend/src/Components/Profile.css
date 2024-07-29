@@ -1,145 +1,150 @@
 .profile-container {
-    padding: 20px;
-    background: linear-gradient(135deg, #1e1e1e, #333);
-    border-radius: 10px;
-    color: #fff;
-    max-width: 800px;
-    margin: 0 auto;
-  }
+  padding: 20px;
+  background: linear-gradient(135deg, #1e1e1e, #333);
+  border-radius: 10px;
+  color: #fff;
+  max-width: 800px;
+  margin: 0 auto;
+}
 
-  .header {
-    text-align: center;
-    margin-bottom: 20px;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.7);
-    position: relative;
-    border-radius: 8px;
-  }
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  position: relative;
+  border-radius: 8px;
+}
 
-  .header h2 {
-    margin: 0;
-    color: #fff;
-    font-size: 32px;
-    color: #00DDFF;
-  }
+.header h2 {
+  margin: 0;
+  color: #00DDFF;
+  font-size: 32px;
+}
 
-  .header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 2px solid transparent;
-    border-radius: 8px;
-    pointer-events: none;
-    box-sizing: border-box;
-    transition: border-color 0.3s ease;
-  }
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  pointer-events: none;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
 
-  .header:hover::before {
-    border-color: #00DDFF; /* Blue Light */
-  }
+.header:hover::before {
+  border-color: #00DDFF; /* Blue Light */
+}
 
-  .form-container {
-    margin-bottom: 20px;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    border-radius: 8px;
-    position: relative;
-  }
+.form-container {
+  margin-bottom: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+}
 
-  .form-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 2px solid transparent;
-    border-radius: 8px;
-    pointer-events: none;
-    box-sizing: border-box;
-    transition: border-color 0.3s ease;
-  }
+.form-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  pointer-events: none;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
 
-  .form-container:hover::before {
-    border-color: #00DDFF; /* Blue Light */
-  }
+.form-container:hover::before {
+  border-color: #00DDFF; /* Blue Light */
+}
 
-  .form-group {
-    margin-bottom: 15px;
-  }
+.form-group {
+  margin-bottom: 15px;
+}
 
-  .form-input, .form-textarea, .form-select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background: #222;
-    color: #fff;
-  }
+.form-input, .form-textarea, .form-select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: #222;
+  color: #fff;
+}
 
-  .submit-button {
-    background-color: #00DDFF; /* Brutal Blue */
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
+.submit-button {
+  background-color: #00DDFF; /* Brutal Blue */
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
 
-  .submit-button:hover {
-    background-color: #00DDFF;
-  }
+.submit-button:hover {
+  background-color: #00DDFF;
+}
 
-  .table-container {
-    background: rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    border-radius: 8px;
-  }
+.table-container {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 8px;
+}
 
-  .tasks-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+.tasks-table {
+  width: 100%;
+  border-collapse: collapse;
+}
 
-  .tasks-table th, .tasks-table td {
-    padding: 10px;
-    text-align: center;
-  }
+.tasks-table th, .tasks-table td {
+  padding: 10px;
+  text-align: center;
+  vertical-align: top; /* Align content to the top */
+  max-width: 200px; /* Set a maximum width for cells */
+  overflow: hidden; /* Hide overflow */
+  text-overflow: ellipsis; /* Show ellipsis for overflowed text */
+  white-space: normal; /* Allow text to wrap */
+}
 
-  .tasks-table th {
-    background: #1e1e1e;
-    color: #fff;
-  }
+.tasks-table th {
+  background: #1e1e1e;
+  color: #fff;
+}
 
-  .tasks-table td {
-    background: #333;
-  }
+.tasks-table td {
+  background: #333;
+  word-wrap: break-word; /* Allow long words to break */
+}
 
-  .action-button {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+.action-button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-  .edit-button {
-    background-color: #00DDFF; /* Sister Sister */
-    color: #fff;
-  }
+.edit-button {
+  background-color: #00DDFF; /* Sister Sister */
+  color: #fff;
+}
 
-  .delete-button {
-    background-color: #00DDFF; /* Yass Queen */
-    color: #fff;
-  }
+.delete-button {
+  background-color: #00DDFF; /* Yass Queen */
+  color: #fff;
+}
 
-  .edit-button:hover {
-    background-color: #00DDFF;
-  }
+.edit-button:hover {
+  background-color: #00DDFF;
+}
 
-  .delete-button:hover {
-    background-color: #00DDFF;
-  }
+.delete-button:hover {
+  background-color: #00DDFF;
+}
