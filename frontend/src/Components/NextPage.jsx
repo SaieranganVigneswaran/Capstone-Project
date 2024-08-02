@@ -31,7 +31,7 @@ const NextPage = () => {
   return (
     <div className="next-page">
       <div className="form-container">
-        <button onClick={() => setShowRegisterForm(true)} className="btn btn-primary">Register as Admin</button>
+        {/* <button onClick={() => setShowRegisterForm(true)} className="btn btn-primary">Register as Admin</button> */}
         <button onClick={() => navigate('/start')} className="btn btn-secondary">Go to Start Page</button>
 
         {showRegisterForm && (
