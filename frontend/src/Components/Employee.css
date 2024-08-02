@@ -1,142 +1,146 @@
 /* Style for modern font and colors */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #fff;
-    background: #121212; /* Dark background for the whole page */
-  }
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+  background: #121212; /* Dark background for the whole page */
+}
 
-  .container {
-    padding: 20px;
-    background: linear-gradient(135deg, #1e1e1e, #333);
-    border-radius: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+.container {
+  padding: 10px; /* Reduced padding */
+  background: linear-gradient(135deg, #1e1e1e, #333);
+  border-radius: 10px;
+  max-width: 800px; /* Adjusted maximum width */
+  margin: 0 auto;
+}
 
-  .header {
-    text-align: center;
-    margin-bottom: 20px;
-  }
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
-  .header h3 {
-    font-size: 2em;
-    color: #00DDFF;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
-    font-family: 'Roboto', sans-serif;
-  }
+.header h3 {
+  font-size: 2em;
+  color: #00DDFF;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+  font-family: 'Roboto', sans-serif;
+}
 
-  .add-btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background: #00DDFF;
-    color: #fff;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 1.1em;
-    font-family: 'Roboto', sans-serif;
-    transition: background-color 0.3s;
-  }
+.add-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #00DDFF;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1.1em;
+  font-family: 'Roboto', sans-serif;
+  transition: background-color 0.3s;
+}
 
-  .add-btn:hover {
-    background: #0098CC;
-  }
+.add-btn:hover {
+  background: #0098CC;
+}
 
-  .table-container {
-    margin-top: 20px;
-  }
+.table-container {
+  margin-top: 10px; /* Reduced top margin */
+  overflow: auto; /* Allow scrolling for overflow */
+}
 
-  .employee-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto; /* Ensures the table layout is more compact */
+}
 
-  .employee-table thead {
-    background: #333;
-    color: #00DDFF;
-  }
+.employee-table thead {
+  background: #333;
+  color: #00DDFF;
+}
 
-  .employee-table th, .employee-table td {
-    padding: 12px;
-    text-align: left;
-  }
+.employee-table th,
+.employee-table td {
+  padding: 8px; /* Reduced padding for cells */
+  text-align: left;
+}
 
-  .employee-table tr:nth-child(even) {
-    background: #1e1e1e;
-  }
+.employee-table tr:nth-child(even) {
+  background: #1e1e1e;
+}
 
-  .employee-table tr:nth-child(odd) {
-    background: #2c2c2c;
-  }
+.employee-table tr:nth-child(odd) {
+  background: #2c2c2c;
+}
 
-  .employee-table td {
-    color: #ccc;
-  }
+.employee-table td {
+  color: #ccc;
+  font-size: 0.9em; /* Slightly smaller font size */
+}
 
-  .employee-image {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-  }
+.employee-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
 
-  .btn {
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    font-size: 0.9em;
-    cursor: pointer;
-    color: #fff;
-    font-family: 'Roboto', sans-serif;
-  }
+.btn {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 0.9em;
+  cursor: pointer;
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  transition: background-color 0.3s;
+}
 
-  .btn-edit {
-    background: #00DDFF;
-    margin-right: 5px;
-  }
+.btn-edit {
+  background: #00DDFF;
+  margin-right: 5px; /* Space between edit and delete buttons */
+}
 
-  .btn-edit:hover {
-    background: #0098CC;
-  }
+.btn-edit:hover {
+  background: #0098CC;
+}
 
-  .btn-delete {
-    background: #00DDFF;
-  }
+.btn-delete {
+  background: #FF6F6F; /* Different color to differentiate from edit button */
+}
 
-  .btn-delete:hover {
-    background: #00DDFF;
-  }
+.btn-delete:hover {
+  background: #CC0000;
+}
 
-  /* Common button styles */
-  .btn {
-    display: inline-block !important;
-    padding: 10px 20px !important;
-    background: #00DDFF !important;
-    color: #fff !important;
-    border-radius: 5px !important; /* Sharp, rectangular corners */
-    text-decoration: none !important;
-    font-size: 1.1em !important;
-    font-family: 'Roboto', sans-serif !important;
-    transition: background-color 0.3s !important;
-    cursor: pointer !important;
-    border: none !important;
-    text-align: center !important; /* Center text inside the button */
+/* Common button styles */
+.btn {
+  display: inline-block !important;
+  padding: 10px 20px !important;
+  background: #00DDFF !important;
+  color: #fff !important;
+  border-radius: 5px !important; /* Sharp, rectangular corners */
+  text-decoration: none !important;
+  font-size: 1.1em !important;
+  font-family: 'Roboto', sans-serif !important;
+  transition: background-color 0.3s !important;
+  cursor: pointer !important;
+  border: none !important;
+  text-align: center !important; /* Center text inside the button */
 }
 
 /* Specific styles for edit button */
 .btn-edit {
-    background: #00DDFF;
-    margin-right: 5px; /* Space between edit and delete buttons */
+  background: #00DDFF;
+  margin-right: 5px; /* Space between edit and delete buttons */
 }
 
 .btn-edit:hover {
-    background: #0098CC;
+  background: #0098CC;
 }
 
 /* Specific styles for delete button */
 .btn-delete {
-    background: #FF6F6F; /* Different color to differentiate from edit button */
+  background: #FF6F6F; /* Different color to differentiate from edit button */
 }
 
 .btn-delete:hover {
-    background: #CC0000;
+  background: #CC0000;
 }
-

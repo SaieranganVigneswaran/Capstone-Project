@@ -1,12 +1,68 @@
 .about-container {
-    padding: 20px;
+    padding: 40px; /* Increased padding for a spacious feel */
     background: linear-gradient(135deg, #1e1e1e, #333);
-    border-radius: 10px;
+    border-radius: 15px; /* Slightly larger border radius */
     color: #fff;
-    max-width: 600px;
+    max-width: 800px; /* Increased max-width for larger content area */
     margin: 0 auto;
     text-align: center; /* Center text */
     animation: fadeIn 0.5s ease; /* Fade in animation */
+}
+
+.heading {
+    font-size: 2.5em; /* Larger font size for heading */
+    margin-bottom: 20px; /* Space below heading */
+    color: #00DDFF; /* Use the Blue Light color */
+}
+
+.employee-card {
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent background for the card */
+    border-radius: 15px; /* Rounded corners for the card */
+    padding: 40px; /* Increased padding inside the card */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Soft shadow for depth */
+    margin-top: 20px; /* Space above the details */
+    animation: slideIn 0.5s ease; /* Slide in animation */
+    max-width: 900px; /* Increased max-width for the card */
+    width: 100%; /* Make the card full width within its container */
+}
+
+.employee-image {
+    width: 150px; /* Increased width for the image */
+    height: 150px; /* Increased height for the image */
+    border-radius: 50%; /* Make image circular */
+    margin-right: 40px; /* Space between image and details */
+    transition: transform 0.3s; /* Smooth transform transition */
+}
+
+.employee-image:hover {
+    transform: scale(1.1); /* Scale up on hover */
+}
+
+.details h3 {
+    margin: 10px 0; /* Increased space between each detail */
+    color: #00DDFF; /* Use the Blue Light color for details */
+    font-size: 1.8em; /* Larger font size for details */
+}
+
+.note {
+    margin-top: 30px; /* Space above the note */
+    color: #ddd; /* Lighter color for note */
+    font-size: 16px; /* Slightly larger font size */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .employee-card {
+        flex-direction: column; /* Stack details vertically on smaller screens */
+        text-align: center; /* Center text on smaller screens */
+    }
+
+    .employee-image {
+        margin-bottom: 20px; /* Space below image */
+    }
 }
 
 /* Fade in animation */
@@ -21,14 +77,6 @@
     }
 }
 
-.employee-details {
-    display: flex; /* Use flexbox for layout */
-    align-items: center; /* Center items vertically */
-    justify-content: center; /* Center items horizontally */
-    margin-top: 20px; /* Space above the details */
-    animation: slideIn 0.5s ease; /* Slide in animation */
-}
-
 /* Slide in animation */
 @keyframes slideIn {
     from {
@@ -36,40 +84,5 @@
     }
     to {
         transform: translateX(0); /* End at original position */
-    }
-}
-
-.employee-image {
-    width: 100px; /* Set width for the image */
-    height: 100px; /* Set height for the image */
-    border-radius: 50%; /* Make image circular */
-    margin-right: 20px; /* Space between image and details */
-    transition: transform 0.3s; /* Smooth transform transition */
-}
-
-.employee-image:hover {
-    transform: scale(1.1); /* Scale up on hover */
-}
-
-.details h3 {
-    margin: 5px 0; /* Space between each detail */
-    color: #00DDFF; /* Use the Blue Light color for details */
-}
-
-/* Note styles */
-.note {
-    margin-top: 20px; /* Space above the note */
-    color: #ddd; /* Lighter color for note */
-    font-size: 14px; /* Smaller font size */
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .employee-details {
-        flex-direction: column; /* Stack details vertically on smaller screens */
-    }
-
-    .employee-image {
-        margin-bottom: 20px; /* Space below image */
     }
 }

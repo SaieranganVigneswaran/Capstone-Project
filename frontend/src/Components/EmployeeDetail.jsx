@@ -124,8 +124,8 @@ const EmployeeDetail = () => {
                                                             className="task-card"
                                                         >
                                                             <h6>{task.title}</h6>
-                                                            <p>Project: {task.project_name}</p>
-                                                            <p>Description: {task.description}</p>
+                                                            <p><h6>Project: {task.project_name}</h6></p>
+                                                            <p><h6>Description: {task.description}</h6></p>
                                                         </div>
                                                     )}
                                                 </Draggable>

@@ -1,12 +1,15 @@
+/* Profile Container */
 .profile-container {
-  padding: 20px;
-  background: linear-gradient(135deg, #1e1e1e, #333);
-  border-radius: 10px;
-  color: #fff;
-  max-width: 800px;
-  margin: 0 auto;
+  padding: 20px !important;
+  background: linear-gradient(135deg, #1e1e1e, #333) !important;
+  border-radius: 10px !important;
+  color: #fff !important;
+  width: 100% !important; /* Use full width */
+  max-width: none !important; /* Remove max-width constraint */
+  margin: 0 auto !important; /* Center the container */
 }
 
+/* Header */
 .header {
   text-align: center;
   margin-bottom: 20px;
@@ -14,6 +17,7 @@
   background: rgba(0, 0, 0, 0.7);
   position: relative;
   border-radius: 8px;
+  width: 100%; /* Use full width */
 }
 
 .header h2 {
@@ -40,12 +44,14 @@
   border-color: #00DDFF; /* Blue Light */
 }
 
+/* Form Container */
 .form-container {
   margin-bottom: 20px;
   background: rgba(0, 0, 0, 0.5);
   padding: 20px;
   border-radius: 8px;
   position: relative;
+  width: 100%; /* Use full width */
 }
 
 .form-container::before {
@@ -66,6 +72,7 @@
   border-color: #00DDFF; /* Blue Light */
 }
 
+/* Form Elements */
 .form-group {
   margin-bottom: 15px;
 }
@@ -79,6 +86,7 @@
   color: #fff;
 }
 
+/* Submit Button */
 .submit-button {
   background-color: #00DDFF; /* Brutal Blue */
   color: #fff;
@@ -93,12 +101,15 @@
   background-color: #00DDFF;
 }
 
+/* Table Container */
 .table-container {
   background: rgba(0, 0, 0, 0.5);
   padding: 20px;
   border-radius: 8px;
+  width: 100%; /* Use full width */
 }
 
+/* Tasks Table */
 .tasks-table {
   width: 100%;
   border-collapse: collapse;
@@ -124,6 +135,7 @@
   word-wrap: break-word; /* Allow long words to break */
 }
 
+/* Action Buttons */
 .action-button {
   padding: 5px 10px;
   border: none;

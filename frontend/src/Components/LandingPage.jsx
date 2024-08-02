@@ -3,18 +3,29 @@ import './LandingPage.css';
 import ParticlesBg from 'particles-bg';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSun, faCloud, faCloudRain, faSnowflake } from '@fortawesome/free-solid-svg-icons';
 
-// Fetch temperature from weather API
-const fetchTemperature = async () => {
-  const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Chennai&appid=YOUR_API_KEY&units=metric');
+// Fetch temperature and city name from weather API
+const fetchWeatherData = async () => {
+  const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Chennai&appid=YOUR_API_KEY&units=metric'); // Replace with your actual API key
+  if (!response.ok) {
+    throw new Error('Failed to fetch weather data');
+  }
   const data = await response.json();
-  return data.main.temp;
+  console.log(data); // Log the response to debug
+  return {
+    temperature: data.main.temp,
+    city: data.name,
+    weatherCondition: data.weather[0].main // Get weather condition
+  };
 };
 
 const LandingPage = () => {
   const [dateTime, setDateTime] = useState('');
   const [temperature, setTemperature] = useState('');
-  const [clock, setClock] = useState('');
+  const [city, setCity] = useState(''); // Add state for city
+  const [weatherCondition, setWeatherCondition] = useState(''); // Add state for weather condition
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,13 +43,19 @@ const LandingPage = () => {
     const updateDateTime = () => {
       const now = new Date();
       setDateTime(format(now, 'MMMM dd, yyyy HH:mm:ss'));
-      setClock(format(now, 'HH:mm:ss'));
     };
 
     // Fetch weather data
     const fetchWeather = async () => {
-      const temp = await fetchTemperature();
-      setTemperature(`${temp}°C`);
+      try {
+        const { temperature, city, weatherCondition } = await fetchWeatherData();
+        setTemperature(`${temperature}°C`);
+        setCity(city);
+        setWeatherCondition(weatherCondition); // Set weather condition state
+        console.log(`Temperature: ${temperature}, City: ${city}, Condition: ${weatherCondition}`); // Log the values to debug
+      } catch (error) {
+        console.error('Error fetching weather data:', error); // Log any errors
+      }
     };
 
     // Event listeners
@@ -58,6 +75,22 @@ const LandingPage = () => {
     };
   }, []);
 
+  // Choose an icon based on the weather condition
+  const getWeatherIcon = (condition) => {
+    switch (condition) {
+      case 'Clear':
+        return <FontAwesomeIcon icon={faSun} className="weather-icon" />;
+      case 'Clouds':
+        return <FontAwesomeIcon icon={faCloud} className="weather-icon" />;
+      case 'Rain':
+        return <FontAwesomeIcon icon={faCloudRain} className="weather-icon" />;
+      case 'Snow':
+        return <FontAwesomeIcon icon={faSnowflake} className="weather-icon" />;
+      default:
+        return <FontAwesomeIcon icon={faCloud} className="weather-icon" />; // Default icon for unknown weather
+    }
+  };
+
   return (
     <div className="landing-page">
       <ParticlesBg type="cobweb" bg={true} />
@@ -67,23 +100,12 @@ const LandingPage = () => {
         <a href="/next" className="cta-button">Get Started</a>
       </div>
       <div className="content">
-        <div className="card-container">
-          <div className="card">
-            <div className="card-content">
-              <h2 className="neon-text">Innovative Features</h2>
-              <p>Explore the cutting-edge tools that make managing employees a breeze.</p>
-            </div>
-            <div className="card-back">
-              <h2 className="neon-text">More Info</h2>
-              <p>Discover additional features and benefits of our platform.</p>
-            </div>
-          </div>
-        </div>
         <div className="pin-container">
           <div className="pin">
+            {getWeatherIcon(weatherCondition)} {/* Display weather icon */}
             <div className="pin-content">
-              <div className="pin-date-time">{dateTime}</div>
               <div className="pin-temperature">{temperature}</div>
+              <div className="pin-city">{city}</div> {/* Display city */}
             </div>
           </div>
         </div>
@@ -92,9 +114,6 @@ const LandingPage = () => {
       <footer className="footer">
         <p>© 2024 CapstoneTech. All rights reserved.</p>
       </footer>
-      <div className="clock-container">
-        <div className="clock">{clock}</div>
-      </div>
     </div>
   );
 };

@@ -1,12 +1,20 @@
 /* Category.css */
 
+/* Ensure the body takes up full height */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 .container {
   padding: 20px;
   background: linear-gradient(135deg, #1e1e1e, #333);
   border-radius: 10px;
   color: #fff;
-  max-width: 800px; /* Set a max-width for the container */
+  max-width: 100%; /* Allow the container to take the full width */
   margin: 0 auto; /* Center the container horizontally */
+  min-height: calc(100vh - 40px); /* Ensure the container takes at least the full height of the viewport */
+  box-sizing: border-box; /* Include padding in the height calculation */
 }
 
 .header {
@@ -69,6 +77,7 @@
 
 .table-container {
   margin-top: 20px;
+  overflow-x: auto; /* Allow horizontal scrolling if the table is too wide */
 }
 
 .projects-table {

@@ -18,13 +18,13 @@ const About = () => {
 
     return (
         <div className="about-container">
-            <h2>About Employee</h2>
-            <div className="employee-details">
+            <h2 className="heading">About Employee</h2>
+            <div className="employee-card">
                 <img src={`http://localhost:3000/Images/${employee.image}`} className='employee-image' alt='Employee' />
                 <div className='details'>
-                    <h3>Name: {employee.name}</h3>
-                    <h3>Email: {employee.email}</h3>
-                    <h3>Salary: ${employee.salary}</h3>
+                    <h3 className="employee-name">Name: {employee.name}</h3>
+                    <h3 className="employee-email">Email: {employee.email}</h3>
+                    <h3 className="employee-salary">Salary: ${employee.salary}</h3>
                 </div>
             </div>
             <div className="note">

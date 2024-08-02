@@ -6,15 +6,49 @@
     color: #fff;
     font-family: 'Orbitron', sans-serif; /* Updated font */
     background: linear-gradient(45deg, #00DDFF, #111); /* Initial gradient */
-    animation: gradientAnimation 10s ease infinite; /* Background gradient animation */
+    animation: gradientAnimation 15s ease infinite; /* Slower background gradient animation */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+h1 {
+    font-size: 4rem;
+    animation: fadeIn 2s ease forwards;
+    opacity: 0;
+}
+
+p {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    animation: fadeIn 2s ease forwards;
+    animation-delay: 1s; /* Delay for paragraph */
+    opacity: 0;
 }
 
 /* Animated Background Gradient */
 @keyframes gradientAnimation {
-    0% { background: linear-gradient(45deg, #FEFFFF, #111); }
-    50% { background: linear-gradient(45deg, #3AAFA9, #111); }
-    100% { background: linear-gradient(45deg, #FEFFFF, #111); }
+    0% { background: linear-gradient(45deg, #00DDFF, #000); }  /* Light Blue to Black */
+    25% { background: linear-gradient(45deg, #00DDFF, #000); }  /* Light Blue to Black */
+    50% { background: linear-gradient(45deg, #00DDFF, #000); }  /* Light Blue to Black */
+    75% { background: linear-gradient(45deg, #00DDFF, #000); }  /* Light Blue to Black */
+    100% { background: linear-gradient(45deg, #00DDFF, #000); }  /* Light Blue to Black */
 }
+
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Add a subtle glowing effect to text */
+.landing-page h1, .landing-page p {
+    text-shadow: 0 0 20px rgba(0, 221, 255, 0.8), 0 0 30px rgba(0, 221, 255, 0.6);
+}
+
 
 /* Hero Section */
 .hero-section {
@@ -130,19 +164,22 @@
     background: #222;
     transform: rotateY(180deg);
 }
-
 /* Pin Container */
 .pin-container {
+    position: absolute; /* Change to absolute positioning */
+    top: 20px; /* Adjust top position */
+    right: 20px; /* Adjust right position */
     display: flex;
     justify-content: center;
-    margin-top: 40px;
+    margin-top: 0; /* Remove margin-top */
+    z-index: 10; /* Ensure it's on top */
 }
 
 .pin {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1); /* Slightly darker for depth */
     box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
     display: flex;
     align-items: center;
@@ -151,6 +188,7 @@
     position: relative;
     perspective: 1000px;
     animation: float 3s ease-in-out infinite; /* Floating effect */
+    backdrop-filter: blur(10px); /* Add blur effect */
 }
 
 @keyframes float {
@@ -167,9 +205,14 @@
     font-size: 0.75rem;
     text-align: center;
     font-weight: bold;
-    transform: rotateX(-10deg) rotateY(20deg);
+    transform: rotate(0deg); /* Ensure horizontal alignment */
     transition: transform 0.3s;
     font-family: 'Poppins', sans-serif; /* Updated font */
+}
+
+.pin-city {
+    font-size: 0.9rem;
+    color: #fff; /* Adjust color as needed */
 }
 
 .pin-date-time, .pin-temperature {
@@ -184,6 +227,15 @@
     font-size: 0.9rem;
     font-weight: normal;
 }
+
+/* Weather icon styles */
+.weather-icon {
+    width: 40px; /* Adjust size */
+    height: auto;
+    margin-bottom: 5px; /* Space between icon and temperature */
+    color: #00DDFF; /* Match with your futuristic theme */
+}
+
 
 /* Scroll Beam */
 .scroll-beam {
